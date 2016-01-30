@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+
+    <head th:replace="fragment/header :: head"></head>
+
+    <body role="document">
+
+        <div class="container" role="main">
+            <div class="starter-template">
+                <h2>We're sorry!</h2>
+                <h2>Something not good happened...</h2>
+            </div>
+
+            <h2 th:text="#{error.title}">Your request cannot be processed <span>:(</span></h2>
+
+            <div th:text="${#dates.format(timestamp)}">July 11, 2012 2:17:16 PM CDT</div>
+
+            <p th:text="${exception.message}">The exception message...</p>
+
+            <p th:text="${exception}">The exception...</p>
+
+            <div>Please contact the operator with the above information.</div>
+        </div>
+
+        
+    </body>
+
+</html>

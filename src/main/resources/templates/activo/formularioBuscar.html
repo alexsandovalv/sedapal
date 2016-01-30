@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	
+	<head th:replace="fragment/header :: head"></head>
+	<body>
+
+		<header th:replace="fragment/header :: headerNavigation(activeLink='registrar')">&nbsp;</header>
+
+		<div class="container">
+			
+			<div class="header-title">
+				<h1 class="dashboard-title text-center h1">Buscar por Formulario</h1>
+			</div>
+
+			
+			
+			<div class="col-xs-12 col-sm-10 col-md-10 container-fluid">
+				<th:block th:if="${message != null}">
+			        <div th:replace="fragment/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">Flash message</div>
+			    </th:block>
+			
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">B&uacute;squeda por:</h3>
+					</div>
+					<div class="panel-body">
+						<form action="#" id="formSearch" th:action="@{/activo/buscar}" method="post" class="form-horizontal" role="form">
+							<div class="form-group">
+								<div class="radio radio-primary col-xs-12 col-sm-3 col-md-3 text-right">
+									<label for="optionsRadios1">
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked" />
+										<strong>C&oacute;digo Activo</strong>
+									</label>
+								</div>
+								
+								<div class="col-xs-12 col-sm-7 col-md-7"><br/>
+									<select id="cboAnexo" name="cboAnexo" class="form-control">
+										<option value="2">Planilla de Inventario de Unidades de Transporte</option>
+										<option value="3" disabled="disabled">Planilla de M&aacute;quinarias, muebles y equipos diversos</option>
+										<option value="4">Planilla de Inventario de Equipamiento de Estructuras Sanitarias</option>
+										<option value="5">Planilla de Inventario de Terrenos, locales Administrativos y Estructuras Sanitarias</option>
+									</select>
+									<input type="text" id="txtCodigo" name="codigo" class="form-control inputNumber" autocomplete="off"
+											placeholder="Codigo" readonly="readonly"/>
+									<!-- autocomplete="off" -->
+								</div>
+								
+							</div>
+							<div class="form-group">
+								<div class="radio radio-primary col-xs-12 col-sm-3 col-md-3 text-right">
+									<label for="optionsRadios2">
+										<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
+										<strong>Ficha Usuario</strong>
+									</label>
+								</div>
+								
+								<div class="col-xs-12 col-sm-7 col-md-7">
+									<input type="text" id="txtResponsable" name="responsable" class="form-control inputNumber nocopy" 
+											placeholder="Ingrese Responsable" readonly="readonly" autocomplete="off" />
+								</div>
+																
+							</div>
+							
+							<div class="form-group">
+								<div class="radio radio-primary col-xs-12 col-sm-3 col-md-3 text-right">
+									<label for="optionsRadios3">
+										<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" />
+										<strong>N&uacute;mero Folio</strong>
+									</label>
+								</div>
+								
+								<div class="col-xs-12 col-sm-7 col-md-7">
+									<input type="text" id="txtNumFolio" name="folio" class="form-control inputNumber nocopy" 
+											placeholder="Numero Folio" readonly="readonly" autocomplete="off" />
+								</div>
+								
+							</div>
+														
+							<div class="form-group">
+							    <div class="col-sm-offset-3 col-sm-8 col-xs-12">
+							      <input type="submit" id="btnBuscar" class="btn btn-primary" value="Buscar" />
+							    </div>
+							</div>
+							
+						</form>
+					</div>
+				</div>				
+			</div>
+			
+		</div>
+		
+		<script th:inline="javascript">
+			$("#txtCodigo").removeAttr("readonly");
+			$("#txtCodigo").focus();
+			
+			$(':text').on('keyup keypress', function(e) {
+				  var code = e.keyCode || e.which;
+				  if (code == 13) {
+					  $("#btnBuscar").trigger("click");
+				  }
+				});
+			
+			var validateField = function(isAlert){
+				if($("#optionsRadios1").is(":checked")){
+					if(isAlert){
+						if( !$.trim($("#txtCodigo").val()) ){
+							alert('Ingrese Codigo de activo..');
+							$("#txtCodigo").focus();
+							return false;
+						}
+						$("#formSearch").removeAttr("target");
+						return true;
+		            }else{
+		            	$("#cboAnexo option[value=3]").attr('disabled','disabled');
+		            	$("#txtResponsable").val('');
+			            $("#txtCodigo").removeAttr("readonly");
+			            $("#txtResponsable").attr("readonly","readonly");
+			            $("#cboAnexo").removeAttr("disabled");
+			            $("#txtNumFolio").attr("readonly","readonly");
+			            $("#txtNumFolio").val('');
+			            $("#txtCodigo").focus();
+			            $("#cboAnexo").val(2);
+			            return false;
+		            }						
+		        }else if($("#optionsRadios2").is(":checked")){
+		        	if(isAlert){
+						if( !$.trim($("#txtResponsable").val()) ){
+							alert('Ingrese codigo de ficha..');
+							$("#txtResponsable").focus();
+							return false;
+						}
+						$("#formSearch").removeAttr("target");
+						return true;
+		            }else{
+		            	$("#cboAnexo").val(2);
+		            	$("#cboAnexo").attr("disabled","disabled");
+			        	$("#txtCodigo").val('');
+			            $("#txtResponsable").removeAttr("readonly");
+			            $("#txtCodigo").attr("readonly","readonly");
+			            $("#txtNumFolio").attr("readonly","readonly");
+			            $("#txtNumFolio").val('');
+			            $("#txtResponsable").focus();
+			            return false;
+		        	}
+		        }else if($("#optionsRadios3").is(":checked")){
+		        	if(isAlert){
+						if( !$.trim($("#txtNumFolio").val()) ){
+							alert('Ingrese numero de Folio..');
+							$("#txtNumFolio").focus();
+							return false;
+						}
+						$("#formSearch").attr("target","_blank");
+						return true;
+		            }else{
+		            	$("#cboAnexo").val(2);
+		            	$("#cboAnexo").removeAttr("disabled");
+		            	$("#cboAnexo option[value=3]").removeAttr('disabled');
+			        	$("#txtCodigo").val('');
+			            $("#txtCodigo").attr("readonly","readonly");
+			            $("#txtResponsable").val('');
+			            $("#txtResponsable").attr("readonly","readonly");
+			            
+			            $("#txtNumFolio").removeAttr("readonly");
+			            $("#txtNumFolio").focus();
+			            return false;
+		        	}
+		        }
+			}
+			$("#optionsRadios1, #optionsRadios2, #optionsRadios3").change(function(){
+				validateField(false);
+			});
+						
+			
+			$("#formSearch").submit(function(event) {
+				if(validateField(true)){
+					console.log("validation is ok");
+					$(this).submit();
+				}
+				event.preventDefault();
+			});
+		</script>
+		
+		<footer th:replace="fragment/footer :: footer"></footer>
+		
+	</body>
+</html>

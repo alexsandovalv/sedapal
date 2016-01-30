@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tiempo de sesion agotado!!</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="shortcut icon" href="../../../../image/favicon.ico" th:href="@{/resources/image/favicon.ico}"></link>
+    <link href="../../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+	<br />
+	<br />
+    <div th:replace="fragment/alert :: alert (type='warning', message=${errorTimeOut})">Error: Error</div>
+    
+    
+    <div th:include="fragment/footer :: footer">&copy; 2014 HP | Reservado</div>
+</div>
+</body>
+</html>

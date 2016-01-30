@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es" 
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	  
+	<head th:replace="fragment/header :: head"></head>
+	
+	<body>
+		
+		<header th:replace="fragment/header :: headerNavigation(activeLink='registrar')">&nbsp;</header>
+
+	    <div class="container">
+	    	<div class="header-title">
+	    		<h2 class="text-center text-uppercase"><strong>Formulario</strong></h2>
+	    		<h1 class="text-center text-uppercase h1">Planilla de Inventario de Unidades de Transporte</h1>
+	    		<h4 class="text-center text-capilize h4">Al <em>31</em> de <em>Octubre</em> de 2015</h4>
+	    	</div>
+	    	
+	    	<th:block th:if="${message != null}">
+		        <!--/* The message code is returned from the @Controller */-->
+		        <div th:replace="fragment/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">Flash message</div>
+		    </th:block>
+
+	    	<div class="col-xs-12 col-sm-12 col-md-11 container-fluid">
+				<div class="row">				
+
+					<form enctype="multipart/form-data" th:action="@{/activo/guardar}" method="post" class="form-horizontal" rol="form" 
+							th:object="${activo}">
+							
+						<a th:href="@{/activo/util/buscarFichas/}" class="hidden" id="hdnBuscarUser"></a>
+						<a th:href="@{/activo/util/buscarCeco/}" class="hidden" id="hdnBuscarCeco"></a>
+						<a th:href="@{/activo/util/buscarEmplaz/}" class="hidden" id="hdnBuscarEmplz"></a>
+						
+						<a th:href="@{/activo/picture/}" class="hidden" id="hdnShowImgn"></a>
+						
+						<input type="hidden" id="anexo" name="anexo" th:value="${anexo}" />
+						<input type="hidden" name="denominacion_clase" value="Vehículos" />
+						<input type="hidden" value="17100" name="clase"/>
+						<input type="hidden" th:field="*{cuenta_contable}" />
+						
+						<fieldset>
+							<legend>Datos Principales</legend>
+							<div class="col-xs-12 col-md-6">
+								<div class="form-group">
+									<label for="txtFecha" class="col-sm-4 control-label">* Fecha Inventario</label>
+									<div class="col-sm-8 input-group date" id='datetimepicker'>
+										<p th:with="now=${#dates.format(#dates.createNow(),'dd/MM/yyyy')}" th:remove="tag">
+											<input type="text" id="txtFecha" class="form-control" th:unless="!*{fecha_inventario}"
+													th:value="*{#dates.format(fecha_inventario,'dd/MM/yyyy')}" name="fecha_inventario"
+													placeholder="dd/MM/yyyy" required="required"/>
+											<input type="text" id="txtFecha" class="form-control" th:unless="*{fecha_inventario}"
+													th:field="${now}"
+													placeholder="dd/MM/yyyy" required="required"/>
+										</p>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="txtCentroCosto" class="col-sm-4 control-label">*C&oacute;digo Centro Costo</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtCentroCosto" class="form-control inputNumber centroCosto" 
+											th:field="${activo.ceco}" 
+											th:value="${activo.centroCosto.centrocosto}" required="required"
+											placeholder="12000" />
+										<span id="msgAjaxCC" style="display:none;"></span>
+									</div>																
+								</div>
+								
+								<div class="form-group">
+									<label for="txtDenominacionCCC" class="col-sm-4 control-label">Denominaci&oacute;n <small>Ce. Co.</small></label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDenominacionCCC" class="form-control centroCostoDeno" 
+												th:field="*{centro_costo_denomi}" 
+												th:value="${activo.centroCosto.denominacion}" readonly="readonly"
+												placeholder="Denominacion ceco" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtProyecto" class="col-sm-4 control-label">Equipo / Proyecto</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtProyecto" class="form-control proyecto" required="required" readonly="readonly"
+                                               th:value="${activo.centroCosto.codigoDocumentario}"
+                                               th:field="*{equipo_proyecto}" placeholder="Equipo" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtGerencia" class="col-sm-4 control-label">Gerencia</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtGerencia" class="form-control gerencia"
+                                               th:value="${activo.centroCosto.gerencia}" required="required" readonly="readonly"
+                                               th:field="*{gerencia}" placeholder="Gerencia" />
+									</div>																
+								</div>
+							</div>
+
+							<div class="col-xs-12 col-md-6">
+								<div class="form-group">
+									<label for="txtNombres" class="col-sm-4 control-label">Nombres y Apellidos</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtNombres" class="form-control fichaNombres" readonly="readonly"
+											th:value="${activo.ficha.nombreCompleto}" placeholder="nombre" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtFichaUsuario" class="col-sm-4 control-label">* Ficha Usuario</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtFichaUsuario" class="form-control inputNumber fichaUsuario" 
+											th:field="*{fichaUsuario}"
+											th:value="${activo.ficha.idficha}" required="required" 
+											 placeholder="Codigo ficha" />
+										<span id="msgAjax" style="display:none;"></span>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtCodInterno" class="col-sm-4 control-label">C&oacute;digo Interno</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtCodInterno" class="form-control" 
+											th:field="*{nro_interno}" placeholder="1000" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtEmplazamiento" class="col-sm-4 control-label">* Emplazamiento</label>
+									<div class="col-sm-8">
+										<select class="form-control cmbEmplazamiento" id="txtEmplazamiento" 
+											th:field="${activo.emplaz}" required="required" >
+											<option value="0" selected="selected">Seleccione</option>
+											<option th:each="empl : ${emplzamientos}" 
+													th:text="${empl.codigo +' - '+ empl.vinculado}" th:value="${{empl.codigo}}"
+													>[option]</option>
+											</select>
+										<input type="hidden" id="txtDenoEmplazamientos" th:field="*{den_emplaz}" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtDenoEmplazamiento" class="col-sm-4 control-label">Denominaci&oacute;n Emplazamiento</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDenoEmplazamiento" class="form-control emplazamientoDeno" 
+											th:value="*{den_emplaz}"
+											readonly="readonly" placeholder="Denom Emplazamiento" />
+									</div>
+								</div>
+							</div>				
+						</fieldset>
+						
+						<br></br>
+
+						<fieldset>
+							<legend>Datos del Activo</legend>
+							<div class="form-group form-group-sm">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>C&oacute;digo <br></br>Activo Fijo</td>
+											<td>Seq <br></br>2015</td>
+											<td>Seq <br></br>2013</td>
+											<td>Denominaci&oacute;n del Bien</td>
+											<td>Marca</td>
+											<td>Modelo</td>
+											<td>Color</td>
+											<td style="width: 135px">E/C</td>
+										</tr>
+										<tr>
+											<td>
+												<input type="text" id="idActivo" th:field="${activo.activo}" class="form-control" size="1" required="required" 
+													readonly="readonly"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="1" th:field="${activo.seq2015}" />
+											</td>
+											<td>
+												<input type="text" class="form-control" size="1" th:field="${activo.secuencial}"/>
+											</td>
+											<td>
+												<input type="text" id="nomActivo" class="form-control" size="0" th:field="${activo.nombre_denominacon}" required="required"
+													readonly="readonly"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="5" th:field="${activo.marca}" />
+											</td>
+											<td>
+												<input type="text" class="form-control" size="2" th:field="${activo.modelo}"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="1" th:field="${activo.color}"/>
+											</td>
+											<td>
+												<select class="form-control" th:field="${activo.estado_conservacion}">
+											    	<option value="10">10 Muy Bueno</option>
+											    	<option value="11">11 Bueno</option>
+											    	<option value="12">12 Regular</option>
+											    	<option value="13">13 Malo</option>
+											    	<option value="14">14 Muy Malo</option>
+											    </select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+						<br></br>
+
+						<fieldset>
+							<legend>Datos Adicionales</legend>
+							<div class="form-group form-group-sm">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td>Placa</td>
+											<td>Tipo</td>
+											<td>A&nacute;o de Fabricaci&oacute;n</td>
+											<td>Chasis N</td>
+											<td>Motor N</td>
+											<td style="width: 155px">O/I</td>
+										</tr>
+										<tr>
+											<td>
+												<input type="text" class="form-control" size="2" th:field="${activo.placa}" required="required"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="2" th:field="${activo.vehi_tipo}"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="1" th:field="${activo.vehi_anio_fabricacion}"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="3" th:field="${activo.chasis}"/>
+											</td>
+											<td>
+												<input type="text" class="form-control" size="2" th:field="${activo.vehi_nro_motor}" required="required"/>
+											</td>
+											<td>
+												<select class="form-control" th:field="${activo.operatividad}">
+											    	<option value="O">Operativo</option>
+											    	<option value="I">Inoperativo</option>											    	
+											    </select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</fieldset>
+
+						<br></br>
+
+						<fieldset>
+							<legend>Observaciones</legend>
+							<div class="form-group">
+								<textarea class="form-control" rows="4" th:field="${activo.observacion}" required="required"></textarea>
+							</div>
+						</fieldset>
+						
+						<fieldset th:replace="fragment/divPhotos :: photos">
+						</fieldset>
+
+						<br></br>
+						<hr></hr>
+						<div class="col-xs-offset-6 col-sm-offset-4 col-md-offset-4 btn-group btn-group-lg" role="group" aria-label="...">
+							<button type="submit" id="guardar" class="btn btn-primary" data-loading-text="Cargando...."
+								autocomplete="off" >Guardar</button>
+							
+							<a th:href="@{'/activo/printPDF/'+${anexo}+'/'+${activo.activo}}" target="_blank" class="btn" 
+								th:classappend="*{#strings.defaultString(estado_registro,'disabled')=='disabled'} ? 'btn-default disabled': 'btn-default'">
+									Generar Formulario</a>
+								
+							<a th:href="@{'/activo/'}" class="btn btn-default">Cancelar</a>
+						</div>
+					</form>
+				</div>
+	    	</div>
+	    </div>
+
+		<br></br>
+		
+		<script th:inline="javascript">
+		$(function() {
+			// <![CDATA[
+				var process = /*[[${process}]]*/
+					console.log("process = " + process);
+				
+				if(process == 'new'){
+					$('input[type=text]').attr('required','required');
+					$('select').attr('required','required');
+					$('input[type=text][readonly]').removeAttr('readonly');
+					$("#idActivo").removeAttr('required');
+					$("#idActivo").attr("readonly","readonly");
+				}
+				$("#txtFichaUsuario").focus();
+			// ]]>
+		});
+		</script>
+		
+		
+		<div th:replace="fragment/showImageModal :: modal"></div>
+		
+		<footer th:replace="fragment/footer :: footer"></footer>
+		
+	</body>
+</html>

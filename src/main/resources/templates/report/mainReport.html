@@ -1,0 +1,28 @@
+<!DOCTYPE html>	
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	  
+	<head th:replace="fragment/header :: head"></head>
+	
+	<body>
+		<header th:replace="fragment/header :: headerNavigation(activeLink='report')">&nbsp;</header>
+		
+		<div class="container">
+			
+			<div class="header-title">
+				<h1 class="dashboard-title text-center h1">Seleccionar Reporte</h1>
+			</div>
+			
+			
+			<div class="col-xs-12 col-sm-10 col-md-10 container-fluid">
+				
+				<div class="list-group">
+					<a th:href="@{/report/print/CDR011}" class="list-group-item" target="_blank">1.- Reporte de Inventario de Bienes por Tipo de Planilla</a>
+					<a th:href="@{/report/print/CDR02}" class="list-group-item" target="_blank">2.- Reporte de Inventario de Bienes Nuevos inventariados y pendientes de inventario</a>
+					<a th:href="@{/report/print/CDR03}" class="list-group-item" target="_blank">3.- Reporte de Inventario de Bienes inventariados por tipo clase y pendientes de inventario</a>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

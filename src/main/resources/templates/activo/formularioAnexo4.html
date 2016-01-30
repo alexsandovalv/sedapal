@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	  
+	<head th:replace="fragment/header :: head"></head>
+	
+	<body>
+	
+		<header th:replace="fragment/header :: headerNavigation(activeLink='registrar')">&nbsp;</header>
+	
+	    <div class="container">
+	    	<div class="header-title">
+	    		<h2 class="text-center text-uppercase"><strong>Formulario</strong></h2>
+	    		<h1 class="text-center text-uppercase h1">Planilla de Inventario de Equipamiento de Estructuras Sanitarias</h1>
+	    		<h4 class="text-center text-capilize h4">Al <em>30</em> de <em>Noviembre</em> de 2015</h4>
+	    	</div>
+
+	    	<div class="col-xs-12 col-sm-12 col-md-11 container-fluid">
+				<div class="row">
+				
+					<th:block th:if="${message != null}">
+				        <div th:replace="fragment/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">Flash message</div>
+				    </th:block>
+
+					<form th:action="@{/activo/save/activo/activos}" class="form-horizontal" rol="form" method="post"
+						th:object="${activo}" id="frmActivo">
+					
+						<input type="hidden" id="anexo" name="anexo" th:value="${anexo}" />
+						<a th:href="@{/activo/util/buscarFichas/}" class="hidden" id="hdnBuscarUser"></a>
+						<a th:href="@{/activo/util/buscarCeco/}" class="hidden" id="hdnBuscarCeco"></a>
+						<a th:href="@{/activo/util/buscarEmplaz/}" class="hidden" id="hdnBuscarEmplz"></a>
+						
+						<fieldset>
+						
+							<legend>Datos Principales</legend>
+							<div class="col-xs-12 col-md-6">
+
+								<div class="form-group">
+									<label id="txtfecha" class="col-sm-4 control-label">Fecha</label>
+									<div class="col-sm-8 input-group date datetimepickerLocal" id='datetimepicker'>
+										<p th:with="now=${#dates.format(#dates.createNow(),'dd/MM/yyyy')}" th:remove="tag">
+											<input type="text" id="txtFecha" class="form-control" th:unless="!*{fecha_inventario}"
+													th:field="${activo.fecha_inventario}"
+													placeholder="dd/MM/yyyy" required="required"/>
+											<input type="text" id="txtFecha" class="form-control" th:unless="*{fecha_inventario}"
+													th:field="${now}"
+													placeholder="dd/MM/yyyy" required="required"/>
+										</p>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="idActivo" class="col-sm-4 control-label">Activo Fijo</label>
+									<div class="col-sm-8">
+										<input type="text" id="idActivo" class="form-control" th:field="*{activo}" 
+											placeholder="actfijo" readonly="readonly"/>
+									</div>																
+								</div>
+								
+								<div class="form-group">
+									<label id="txtTipoEstructura" class="col-sm-4 control-label">Tipo Estructura</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtTipoEstructura" class="form-control"
+											th:field="*{equip_tipo_estructura}"  placeholder="Tipo de estructura" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label id="txtDireccion" class="col-sm-4 control-label">Direccion</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDireccion" class="form-control" 
+											th:field="*{direccion}" placeholder="Direccion" />
+									</div>																
+								</div>
+								
+								<div class="form-group">
+									<label id="txtDistrito" class="col-sm-4 control-label">Distrito</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDistrito" class="form-control distrito" 
+											th:field="*{distrito}"
+											 required="required" placeholder="San Borja" />
+									</div>
+								</div>	
+									
+
+								<div class="form-group">
+									<label id="txtEmplazamiento" class="col-sm-4 control-label">Emplazamiento</label>
+									<div class="col-sm-8">
+											 
+										<select class="form-control cmbEmplazamiento" id="txtEmplazamiento" 
+												th:field="*{emplaz}" required="required" >
+											<option value="0" selected="selected">Seleccione</option>
+											<option th:each="empl : ${emplzamientos}" 
+												th:text="${empl.codigo +' - '+ empl.vinculado}" th:value="${{empl.codigo}}"
+												>[option]</option>
+										</select>
+										<input type="hidden" id="txtDenoEmplazamientos" th:field="*{den_emplaz}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="txtDenoEmplazamiento" class="col-sm-4 control-label">Denominaci&oacute;n Emplazamiento</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDenoEmplazamiento" class="form-control emplazamientoDeno" 
+											th:value="*{den_emplaz}" 
+											readonly="readonly" placeholder="Denom Emplazamiento" />
+									</div>
+								</div>
+								
+							</div>
+
+
+							<div class="col-xs-12 col-md-6">
+								<div class="form-group" th:if="${process == 'new'}">
+									<label for="cboclase" class="col-sm-4 control-label">Clase</label>
+									<div class="col-sm-8">
+										<select id="cboclase" class="form-control cmbclase" th:field="*{clase}">
+											<option value="">Seleccione</option>
+										</select>
+										<input type="hidden" id="denominacionClase" th:field="*{denominacion_clase}" />
+									</div>
+								</div>
+																
+								<div class="form-group">
+									<label id="txtCodInterno" class="col-sm-4 control-label">Codigo Interno</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtCodInterno" class="form-control" 
+											th:field="*{nro_interno}" placeholder="1000" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label id="txtUbigeo" class="col-sm-4 control-label">Ubigeo</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtUbigeo" class="form-control" 
+											th:field="*{equip_ubigeo}" placeholder="ubigeo" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label id="txtProyecto" class="col-sm-4 control-label">Equipo Proyecto</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtProyecto" class="form-control proyecto" required="required"
+                                               th:value="${activo.centroCosto.codigoDocumentario}"
+                                               th:field="*{equipo_proyecto}" placeholder="Equipo" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label id="txtGerencia" class="col-sm-4 control-label">Gerencia</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtGerencia" class="form-control gerencia"
+                                               th:value="${activo.centroCosto.gerencia}" required="required" readonly="readonly"
+                                               th:field="*{gerencia}" placeholder="Gerencia" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label id="txtCeco" class="col-sm-4 control-label">Centro de Costo</label>
+									<div class="col-sm-8">
+										<select class="form-control cmbCecos" id="txtCeco" 
+												th:field="*{ceco}" required="required" >
+											<option value="0" selected="selected">Seleccione</option>
+											<option th:each="cc : ${cecos}" 
+												th:text="${cc.centrocosto +' - '+ cc.denominacion}" th:value="${{cc.centrocosto}}"
+												>[option]</option>
+										</select>
+										<input type="hidden" id="txtDenoEmplazamientos" th:field="*{centro_costo_denomi}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label id="txtNombreOperador" class="col-sm-4 control-label">Nombre Operador</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtNombreOperador" class="form-control" 
+											th:field="*{equip_nombre_operador}" placeholder="nombre" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label id="txtTelefonoOpera" class="col-sm-4 control-label">Telefono Operador</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtTelefonoOpera" class="form-control" 
+											th:field="*{equip_telefono_operador}" placeholder="fono" />
+									</div>
+								</div>
+
+								<div class="form-group pull-right">
+									<a class="btn btn-danger hidden removeActivosbtn" href="javascript:void(0);" role="button">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										Eliminar
+									</a>
+									<a class="btn btn-info addNew" href="javascript:void(0);" role="button" id="addbtn">
+										<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+										Nuevo
+									</a>
+									<a class="btn btn-success addActivo" href="javascript:void(0);" role="button">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+										Add
+									</a>
+								</div>
+							</div>				
+						</fieldset>
+						
+						
+						<fieldset>
+							<legend>Lista de Activos</legend>
+
+							<div class="table-responsive table-list-one" th:fragment="itemActivos" id="itemActivos">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Item</th>
+											<th>Codigo Activo</th>
+											<th>Seq 2015</th>
+											<th>Seq 2013</th>
+											<th>Denominación del Bien</th>
+											<th>Marca</th>
+											<th>Serie</th>
+											<th>Modelo</th>
+											<th>Color</th>
+											<th>E/C</th>
+											<th>O/I</th>
+											<th>Observaciones</th>
+											<th></th>
+											<th>
+												<input type="checkbox" id="selectAll" />
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:unless="${!session.activos.isEmpty()}">
+											<td colspan="14">
+												<p class="text-muted" th:text="#{noRecords}">No records found</p>
+											</td>
+										</tr>
+										<tr th:each="item, rowStat : ${session.activos}">
+											<td th:text="${rowStat.count}">1</td>
+											<td th:text="${item.activo}">800064</td>
+											<td th:text="${item.seq2015}">04112015</td>
+											<td th:text="${item.secuencial}">21231</td>
+											<td th:text="${item.nombre_denominacon}">TANQUE DE AGITACION</td>
+											<td th:text="${item.marca}">DEGREMONT</td>
+											<td th:text="${item.nro_serie}">S/S</td>
+											<td th:text="${item.modelo}">S/M</td>
+											<td th:text="${item.color}">Rojo</td>
+											<td th:text="${item.estado_conservacion}">11 bueno</td>
+											<td th:text="${item.operatividad}">Operativo</td>
+											<td th:text="${#strings.abbreviate(item.observacion,30)}">Sin Observaciones</td>
+											<td>
+												<a th:href="@{'/activo/obtenerActivo/'+${item.activo==null?rowStat.count:item.activo}+'/edit/'}" class="seeActivo">
+													<span class="glyphicon glyphicon-pencil"></span>
+												</a>
+											</td>
+											<td>
+												<input type="checkbox" name="actDelete" class="removeActivo" th:value="${item.activo==null?rowStat.count:item.activo}" />
+												<!-- <a th:href="@{'/activo/obtenerActivo/'+${item.activo}+'/remove/'+${anexo}}" class="removeActivo">
+													<span class="glyphicon glyphicon-remove"></span>
+												</a> -->
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</fieldset>
+
+						<br></br>
+						
+						<div class="col-xs-offset-6 col-sm-offset-4 col-md-offset-4 btn-group btn-group-lg" role="group" aria-label="...">
+								<input type="submit" class="btn btn-primary" value="Guardar" />
+								<a th:href="@{'/activo/printPDF/'+${anexo}+'/'+*{activo}}" target="_blank" class="btn" 
+								th:classappend="${#strings.defaultString(process,'new')=='new'} ? 'btn-default disabled': 'btn-default'">
+									Generar Formulario</a>
+								<a th:href="@{'/activo/'}" class="btn btn-default">Cancelar</a>
+							</div>	
+					</form>
+				</div>
+	    	</div>
+	    </div>
+
+		<script th:inline="javascript">
+		
+			$(function() {
+				// <![CDATA[
+					var process = /*[[${process}]]*/
+						console.log("process = " + process);
+					
+					if(process == 'new'){
+						$('input[type=text]', '#frmActivo').attr('required','required');
+						$('select', '#frmActivo').attr('required','required');
+						$('input[type=text][readonly]', '#frmActivo').removeAttr('readonly');
+						$("#idActivo", '#frmActivo').removeAttr('required');
+						$("#idActivo", '#frmActivo').attr("readonly","readonly");
+					}
+					
+					var anexo = '5';
+				    var url = /*[[@{/activo/util/anexos/}]]*/
+				    url = url+ anexo;
+				    var clase = /*[[${activo.clase}]]*/
+				    
+				    $.getJSON(url).done(function(data){
+				    	$.each(data, function(){
+				    		var option = $('<option />');
+				    		option.attr('value', this.clase).text(this.denominacion);
+				    		if(clase == this.clase)
+				    			option.attr('selected','selected')
+				    		$("#cboclase").append(option);
+				    	});
+				    });
+				// ]]>
+				
+				$(document).on("click", ".addActivo", function(event) {
+					event.preventDefault();
+                	$("#searchActivoModal").modal({
+						backdrop: "static",
+						show : true
+					});
+                });
+                
+				$(document).on("click", ".seeActivo", function(event) {
+                	event.preventDefault();
+                	console.log("click ver activo ...... ");
+
+                	var url = $(this).attr("href");
+
+					$(".selectRow",$(this).parents("tbody")).removeClass("selectRow");
+					$(this).parent().parent().addClass("selectRow");
+
+					$("#activoModal").load(url, function(data, statusText, response){
+						if(statusText == 'success'){
+							$("#activoModal").modal({
+								//keyboard: false,
+								backdrop: "static",
+								show : true
+							});
+						}if (response.status == "500" || response.status == "401") {
+							$("body").html(response.responseText);
+						}
+					});                	
+                });
+				
+				$(document).on("click", ".removeActivo", function(event) {
+                	//event.preventDefault();
+                	
+                	if($(this).is(':checked')){
+                		$(this).prop('checked', true);
+						$(this).closest('tr').addClass("selectRow");
+						validateIdRemovesAdd($(this).val());
+                		$(".removeActivosbtn").removeClass("hidden");
+                	}else{
+                		$(this).prop('checked', false);
+                		$(this).closest('tr').removeClass("selectRow");
+                		validateIdRemoves($(this).val());
+                	}
+                	validMasterCheckbox();
+				});
+				
+				$(document).on("change", '#selectAll', function() {
+				    var checkboxes = $(this).closest('table').find('tbody').find(':checkbox');
+				    
+				    if($(this).is(':checked')) {
+				        checkboxes.prop('checked', true);
+				        $(".removeActivosbtn").removeClass("hidden");
+				        $(".table>tbody>tr", $("#itemActivos")).addClass("selectRow");
+				        
+				        idValues = $(checkboxes).map(function() {return this.value;}).get().join(',').split(',');
+				    } else {
+				        checkboxes.prop('checked', false);
+				        $(".removeActivosbtn").addClass("hidden");
+				        $(".table>tbody>tr", $("#itemActivos")).removeClass("selectRow");
+				        idValues = [];
+				    }
+				    /* console.log(idValues);  */
+				});
+				
+				// <![CDATA[
+				$(".removeActivosbtn").click(function(){
+					var idValuesStraing = $.map(idValues, function(data){return data}).join(',');
+					/* console.log("idValuesStraing=>"+idValuesStraing); */
+					var anexo = $("#anexo").val();
+					
+					var formUrlLocal = [[@{'/activo/obtenerActivo/'}]];
+					formUrlLocal += idValuesStraing + '/remove/'+anexo;
+					/* console.log("formUrlLocal==>"+formUrlLocal); */
+					$.ajax({
+		    			type : 'GET',
+		    			url : formUrlLocal,
+		    		}).done(function(response) {
+		    			idValues = [];
+		    			$(".removeActivosbtn").addClass("hidden");
+		    			$("#itemActivos").html(response);
+	            	}).error(function(response){
+	            		idValues = [];
+	            		$(".removeActivosbtn").addClass("hidden");
+	            		//$("a").trigger("click");
+	            		console.log("error bug");
+	            		console.log("response "+response);
+	            	});
+					
+				});
+				// ]]>
+
+			});		
+		</script>
+		
+		<br></br>
+		<footer th:replace="fragment/footer :: footer"></footer>
+		
+		<div class="modal fade" id="activoModal" tabindex="-1" role="dialog" 
+			aria-hidden="true">
+
+		</div>
+		
+		<div th:replace="fragment/showSearchActivoModal :: searchActivo"></div>
+
+	</body>
+</html>

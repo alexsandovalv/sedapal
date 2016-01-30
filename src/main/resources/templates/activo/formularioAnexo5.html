@@ -1,0 +1,327 @@
+<html lang="es" 
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	  
+	<head th:replace="fragment/header :: head"></head>
+	
+	<body>
+	
+		<header th:replace="fragment/header :: headerNavigation(activeLink='registrar')">&nbsp;</header>
+		
+
+	    <div class="container">
+	    	<div class="header-title">
+	    		<h2 class="text-center text-uppercase"><strong>Formulario Anexo 5</strong></h2>
+	    		<h1 class="text-center text-uppercase h1">Planilla de Terrenos, Locales Administrativos y Estructuras Sanitarias</h1>
+	    		<h4 class="text-center text-capilize h4">Al <em>31</em> de <em>Octubre</em> de 2015</h4>
+	    	</div>
+	    	
+	    	<th:block th:if="${message != null}">
+		        <!--/* The message code is returned from the @Controller */-->
+		        <div th:replace="fragment/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">Flash message</div>
+		    </th:block>
+
+	    	<div class="col-xs-12 col-sm-12 col-md-11 container-fluid">
+				<div class="row">				
+
+					<form enctype="multipart/form-data" th:action="@{/activo/guardar}" method="post" class="form-horizontal" rol="form" 
+							th:object="${activo}">
+							
+						<a th:href="@{/activo/util/buscarUser/}" class="hidden" id="hdnBuscarUser"></a>
+						<a th:href="@{/activo/util/buscarCeco/}" class="hidden" id="hdnBuscarCeco"></a>
+						<a th:href="@{/activo/util/buscarEmplaz/}" class="hidden" id="hdnBuscarEmplz"></a>						
+						<a th:href="@{/activo/picture/}" class="hidden" id="hdnShowImgn"></a>
+						
+						<input type="hidden" id="anexo" name="anexo" th:value="${anexo}" />
+							
+						<fieldset>
+							<legend>Datos Principales</legend>
+							<div class="col-xs-12 col-md-6">
+								<div class="form-group">
+								
+									<label for="txtFecha" class="col-sm-4 control-label">Fecha</label>
+									<div class="col-sm-8 input-group date" id='datetimepicker'>
+										<p th:with="now=${#dates.format(#dates.createNow(),'dd/MM/yyyy')}" th:remove="tag">
+											<input type="text" id="txtFecha" class="form-control" th:unless="!*{fecha_inventario}"
+													th:field="${activo.fecha_inventario}"
+													placeholder="dd/MM/yyyy" required="required"/>
+											<input type="text" id="txtFecha" class="form-control" th:unless="*{fecha_inventario}"
+													th:field="${now}"
+													placeholder="dd/MM/yyyy" required="required"/>
+										</p>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtActivoFijo" class="col-sm-4 control-label">Activo Fijo</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtActivoFijo" class="form-control activo" th:field="*{activo}" 
+											placeholder="actfijo" readonly="readonly" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtDenomEstr" class="col-sm-4 control-label">Denom. Estructura</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDenomEstr" class="form-control denoEstructura" 
+											th:field="${activo.nombre_denominacon}" required="required" placeholder="Estr" />
+									</div>																
+								</div>
+								
+								<div class="form-group">
+									<label for="txtDireccion1" class="col-sm-4 control-label">Direccion 1</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDireccion1" class="form-control direccion1" 
+											th:field="*{direccion}" required="required"
+											placeholder="Direccion 1" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtDireccion2" class="col-sm-4 control-label">Direccion 2</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDireccion2" class="form-control direccion2" 
+											th:field="*{ref_direc_historica}" required="required"
+											placeholder="Direccion 2" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtHabilitacion" class="col-sm-4 control-label">Habilitacion</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtHabilitacion" class="form-control habilitacion" 
+											th:field="*{habilitacion}" required="required" 
+											placeholder="Habilitacion" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtUbigeo" class="col-sm-4 control-label">Ubigeo</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtUbigeo" class="form-control ubigeo" 
+											th:field="*{equip_ubigeo}" required="required" 
+											placeholder="Ubigeo" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtDistrito" class="col-sm-4 control-label">Distrito</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDistrito" class="form-control" 
+											th:field="*{distrito}" required="required"  
+											placeholder="Distrito" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtEmplazamiento" class="col-sm-4 control-label">Emplazamiento</label>
+									<div class="col-sm-8">
+										
+										<select class="form-control cmbEmplazamiento" id="txtEmplazamiento" 
+												th:field="*{emplaz}" required="required" >
+											<option value="0" selected="selected">Seleccione</option>
+											<option th:each="empl : ${emplzamientos}" 
+												th:text="${empl.codigo +' - '+ empl.vinculado}" th:value="${{empl.codigo}}"
+												>[option]</option>
+										</select>
+										<input type="hidden" id="txtDenoEmplazamientos" th:field="*{den_emplaz}" />
+									</div>																
+								</div>
+							</div>
+
+							<div class="col-xs-12 col-md-6">
+								<div class="form-group" th:if="${process == 'new'}">
+									<label for="cboclase" class="col-sm-4 control-label">Clase</label>
+									<div class="col-sm-8">
+										<select id="cboclase" class="form-control cmbclase" th:field="*{clase}">
+											<option value="">Seleccione</option>
+										</select>
+										<input type="hidden" id="denominacionClase" th:field="*{denominacion_clase}" />
+									</div>
+								</div>
+							
+								<div class="form-group">
+									<label for="txtoCodigoInterno" class="col-sm-4 control-label">Codigo Interno</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtoCodigoInterno" class="form-control codinterno" 
+											th:field="*{nro_interno}" placeholder="" />
+									</div>																
+								</div>
+
+								<div class="form-group">
+									<label for="txtATAC" class="col-sm-4 control-label">A.T. y A.C.: (M2)</label>
+									<div class="col-sm-8">
+										<div class="form-group row" style="margin-bottom: 4px;">
+											<div class="col-sm-6 input-inline-right2px">
+												<input type="text" id="txtATAC" class="form-control" value="" placeholder="A. terreno" />
+											</div>
+											<div class="col-sm-6 input-inline-left2px">
+												<input type="text" id="txtATAC" class="form-control atac" 
+													th:field="*{umb}" placeholder="Ar. Cons" />
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtCoordenadasUTM" class="col-sm-4 control-label">Coordenadas UTM</label>
+									<div class="col-sm-8">
+										<div class="form-group row" style="margin-bottom: 4px;">
+											<div class="col-md-4 col-sm-6 input-inline-right2px">
+												<input type="text" id="txtCoordenadasUTM" class="form-control" 
+														th:field="*{xx}" placeholder="XX"/>
+											</div>
+											<div class="col-md-4  col-sm-6 input-inline-right2px input-inline-left2px">
+												<input type="text" id="txtCoordenadasUTMYY" class="form-control" 
+														th:field="*{yy}" placeholder="YY"/>
+											</div>
+											<div class="col-md-4  col-sm-6 input-inline-left2px">
+												<input type="text" id="txtCoordenadasUTMZZ" class="form-control" 
+														th:field="*{zz}" placeholder="ZZ" />
+											</div>										
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtMatConstruccion" class="col-sm-4 control-label">Mat Construccion</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtMatConstruccion" class="form-control" 
+											th:field="*{material}" placeholder="mat construccion" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtEstadoConservacion" class="col-sm-4 control-label">Estado Conservacion</label>
+									<div class="col-sm-8">
+										<select class="form-control" th:field="*{estado_conservacion}">
+									    	<option value="10">10 Muy Bueno</option>
+									    	<option value="11">11 Bueno</option>
+									    	<option value="12">12 Regular</option>
+									    	<option value="13">13 Malo</option>
+									    	<option value="14">14 Muy Malo</option>
+									    </select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtOperatividad" class="col-sm-4 control-label">Operatividad</label>
+									<div class="col-sm-8">
+										<select class="form-control" th:field="*{operatividad}">
+									    	<option value="O">Operativo</option>
+									    	<option value="I">Inoperativo</option>											    	
+									    </select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtEstadoPosesion" class="col-sm-4 control-label">Estado Posesion</label>
+									<div class="col-sm-8">
+										<select class="form-control" th:field="*{posesion}" required="required">
+											<option value="">Seleccione</option>
+									    	<option value="SEDAPAL">SEDAPAL</option>
+									    	<option value="PROPIO">PROPIO</option>
+									    </select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtCeco" class="col-sm-4 control-label">Centro Costo</label>
+									<div class="col-sm-8">
+																				
+										<select class="form-control cmbCecos" id="txtCeco" 
+												th:field="*{ceco}" required="required" >
+											<option value="0" selected="selected">Seleccione</option>
+											<option th:each="cc : ${cecos}" 
+												th:text="${cc.centrocosto +' - '+ cc.denominacion}" th:value="${{cc.centrocosto}}"
+												>[option]</option>
+										</select>
+										<input type="hidden" id="txtDenoEmplazamientos" th:value="*{centro_costo_denomi}" />
+										
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="txtDenominacionCeco" class="col-sm-4 control-label">Denominacion ceco</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtDenominacionCeco" class="form-control centroCostoDeno"
+												th:field="*{centro_costo_denomi}" placeholder="denominacion ceco" />
+									</div>
+								</div>
+								<div class="form-group has-error">
+									<label for="txtFolio" class="col-sm-4 control-label">Número Folio</label>
+									<div class="col-sm-8">
+										<input type="text" id="txtFolio" class="form-control" th:field="*{numero_folio}" 
+											placeholder="Ingrese Folio" required="required"/>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						
+
+						<fieldset>
+							<legend>Inventario y Observaciones</legend>
+							<div class="form-group">
+								<textarea class="form-control" rows="4" th:field="*{observacion}"></textarea>
+							</div>
+							
+						</fieldset>
+
+						<fieldset th:replace="fragment/divPhotos :: photos">
+						</fieldset>
+
+						<br></br>
+						<hr></hr>
+						<div class="col-xs-offset-6 col-sm-offset-4 col-md-offset-4 btn-group btn-group-lg" role="group" aria-label="...">
+								<button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
+								<a href="#" class="btn btn-default disabled">Generar Formulario</a>
+								<a th:href="@{'/activo/'}" class="btn btn-default">Cancelar</a>
+							</div>
+					</form>
+				</div>
+	    	</div>
+	    </div>
+	    
+	    <br></br>
+	    
+	    <script th:inline="javascript">
+		    $(function(){
+			// <![CDATA[
+			    var process = /*[[${process}]]*/
+					console.log("process = " + process);
+			    
+			    if(process == 'new'){
+					$('input[type=text]').attr('required','required');
+					$('select').attr('required','required');
+					$('input[type=text][readonly]').removeAttr('readonly');
+					$("#txtActivoFijo").removeAttr('required');
+					$("#txtActivoFijo").attr("readonly","readonly");
+				}
+			    
+			    var anexo = $("#anexo").val();
+			    var url = /*[[@{/activo/util/anexos/}]]*/
+			    url = url+ anexo;
+			    var clase = /*[[${activo.clase}]]*/
+			    
+			    $.getJSON(url).done(function(data){
+			    	$.each(data, function(){
+			    		var option = $('<option />');
+			    		option.attr('value', this.clase).text(this.denominacion);
+			    		if(clase == this.clase)
+			    			option.attr('selected','selected')
+			    		$("#cboclase").append(option);
+			    	});
+			    });
+			            
+			// ]]>
+		    });
+		</script>
+
+		<div th:replace="fragment/showImageModal :: modal"></div>
+		
+		<footer th:replace="fragment/footer :: footer"></footer>
+
+	</body>
+</html>
+

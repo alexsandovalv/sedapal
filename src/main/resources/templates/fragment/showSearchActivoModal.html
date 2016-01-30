@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- Modal -->
+		<div class="modal fade" id="searchActivoModal" tabindex="-1" role="dialog" aria-hidden="true" th:fragment="searchActivo">
+		  <div class="modal-dialog modal-sm" >
+		    <div class="modal-content">
+		      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+				</button>
+				<h4 class="modal-title" id="titleModalLabel">
+					<span>Buscar Activo</span>
+				</h4>
+			</div>
+		      <div class="modal-body" id="bodySearch">
+		        
+	        	<div class="container-fluid">
+	        		<form class="form-horizontal" id="searchCode" 
+	        			th:action="@{/activo/obtenerActivo}" method="post">
+					  <div class="form-group">
+					    <label for="txtCodigo" class="col-sm-4 control-label">C&oacute;digo de Activo</label>
+					    <div class="col-sm-6">
+					    	<input type="text" class="form-control inputNumber" id="txtCodigo" name="codigo" 
+					    		placeholder="Ingrese Codigo Activo" autocomplete="off" min="4"/>
+					    	<span id="textpBlock" class="help-block hidden"></span>
+					    </div>
+					  </div>					  
+					</form>
+					<input type="hidden" id="flagAccept" value="false" />
+					<input type="hidden" id="tmpCodigo" value="" />  
+				</div>
+	        	
+	        	<script th:inline="javascript">
+	        		$(function(){
+	        			
+	        			$("#txtCodigo").val('').focus();
+	        			$("#tmpCodigo").val('');
+	        			
+	        			$('#txtCodigo').on('keyup keypress', function(e) {
+	        				  var code = e.keyCode || e.which;
+	        				  if (code == 13) {
+		        				  e.preventDefault();
+	        					  $("#buscarCode").trigger("click");
+	        				  }
+	        				});
+	        			
+	        			$("#buscarCode").click(function(e){
+	    					e.preventDefault();
+	    					console.log("click en buscar code..");
+	    					
+	    					var urlMain = /*[[@{/activo/}]]*/
+	    					var url = urlMain + 'obtenerActivo';
+	    					var code = $("#txtCodigo").val();
+	    					var anexo = $("#anexo").val();
+	    					var flagYes = $("#flagAccept").val();
+	    					$("#tmpCodigo").val(code);
+	    					console.log("URL: "+url + ' - '+ code);
+	    					
+	    					var posting = $.post(url, {codigo: code, anexo: anexo, flagAccept : flagYes});
+	    					$("#txtCodigo").val('');
+	    					posting.done(function(response){
+	    					   $("#searchActivoModal").modal('hide');
+	                           $('body').removeClass('modal-open');
+	                           $('.modal-backdrop').remove();
+	                           $("#itemActivos").html(response);
+	    					});
+	    					posting.fail(function(xhr, textStatus, errorThrown) {
+	    						console.log('1.-'+xhr);
+	    						console.log('1.1-'+xhr.status);
+	    						console.log('1.2-'+xhr.responseText);
+	    						console.log('2.-'+textStatus);
+	    						console.log('3.-'+errorThrown);
+	    						
+	    						if(xhr.status == 404){
+		    						$("#searchCode").addClass("hidden");
+		    						
+		    						var textNew = "El activo <b>"+code + "</b> no existe. <br></br> ¿Desea crearlo?";
+		    						var spanAlert = $("<span></span>").addClass("glyphicon glyphicon-exclamation-sign").attr("aria-hidden","true");
+		    						var divText = $("<div></div>").addClass('alert alert-warning text-center').attr({role:"alert", id:"divAlert"})
+		    														.html(spanAlert).append(textNew);
+		    						var divRow
+		    						$("#bodySearch > .container-fluid").append(divText);
+		    						
+		    						$("#buscarCode").addClass("hidden");
+		    						var btnAdd = $("<button></button>").addClass("btn btn-success").attr("id","addbtn").text("Crear");
+		    						var btnCancel = $("<button></button>").addClass("btn btn-danger").attr("id","cancelbtn").text("Regresar");
+		    						
+		    						var divbtn = $("<div></div>").attr("id","divbtngroup");
+		    						divbtn.append(btnAdd).append(btnCancel);
+		    						$("#footerbtn").append(divbtn);
+	    						}
+	    						
+	    						if(xhr.status == 409){
+	    							var textmsg = xhr.responseText;
+	    							console.log('textmsg.lenght => '+textmsg.length);
+	    							
+	    							$("#textpBlock").parent().addClass('has-error');
+	    							$("#textpBlock").removeClass('hidden').html('<p>'+textmsg+'</p>');
+	    							if(textmsg.length > 35){
+	    								$("#txtCodigo").attr('readonly','readonly');
+	    								$("#textpBlock").append('¿Desea Continuar?');
+	    								$("#buscarCode").addClass("hidden");
+	    								var btnAdd = $("<button></button>").addClass("btn btn-success").attr("id","btnYES").text("SI");
+			    						var btnCancel = $("<button></button>").addClass("btn btn-danger").attr("id","cancelbtn").text("NO");
+			    						
+			    						var divbtn = $("<div></div>").attr("id","divbtngroup");
+			    						divbtn.append(btnAdd).append(btnCancel);
+			    						$("#footerbtn").append(divbtn);
+	    							}else
+	    								$("#txtCodigo").focus();
+	    						}
+	    					});
+	    					
+	    				});
+	        			
+	        			$(document).on("click", "#addbtn", function(event) {
+	        				event.preventDefault();
+	        				var url = /*[[@{/activo/}]]*/
+	        					url += '/obtenerActivo/0';
+	        				$("#activoModal").load(url, function(){
+								$("#searchActivoModal").modal('hide');
+	                            $('body').removeClass('modal-open');
+	                            $('.modal-backdrop').remove();
+								
+								$("#activoModal").modal({
+									//keyboard: false,
+									backdrop: "static",
+									show : true
+									});
+							});
+	        			});
+	        			
+	        			$(document).on("click", "#btnYES", function(event) {
+	        				event.preventDefault();
+	        				$("#flagAccept").val('true');
+	        				$("#txtCodigo").val($("#tmpCodigo").val());
+	        				$("#buscarCode").trigger("click");
+	        			});
+	        			
+	        			$(document).on("click", "#cancelbtn", function(event) {
+	        				event.preventDefault();
+	            			$("#divAlert").remove();
+	            			$("#divbtngroup").remove();
+	            			$("#flagAccept").val('false');
+	            			$("#txtCodigo").removeAttr('readonly');
+	            			
+	            			$("#textpBlock").addClass("hidden").parent().removeClass('has-error');
+	        				$("#searchCode").removeClass("hidden");
+	            			$("#buscarCode").removeClass("hidden");
+	            			$("#txtCodigo").focus();
+	        			});
+	        			
+	        		});
+	        	</script>
+		        
+		      </div>
+		      <div class="modal-footer" id="footerbtn">
+		        <button type="button" class="btn btn-default" id="buscarCode" >Buscar</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+</body>
+</html>

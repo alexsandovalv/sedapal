@@ -1,0 +1,117 @@
+body {
+    color: #555;
+    /*font-family: Calibri, Georgia,"Times New Roman",Times,serif;*/
+}
+
+@media (min-width: 1200px) {
+  .shortwith{
+    width: 84px !important;
+  }
+  .container {
+	    width: 1300px;
+	}
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.navbar-brand {
+  font-size: 16px;
+}
+
+@media ( min-width :768px) {
+  .modal-dialog {
+    width: 99%;
+  }
+}
+
+@media ( min-width :992px) {
+  .modal-lg {
+    width: 960px;
+  }
+  .modal-dialog {
+      margin-top: 80px;
+  }
+  .modal-sm{
+    width: 580px;
+  }
+}
+
+.header-title {
+  margin: 25px 20px;
+    padding : 20px 10px;
+}
+
+.campaignZone{
+  margin-bottom: 18px;
+}
+
+.dashboard-title {
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-top: 30px;
+}
+
+.dashboard-main {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+table tr.selectRow td{
+  background-color: #DDEBF9;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 2px;
+   width: 100%;
+}
+
+thead th {
+  background-color: #428bca;
+  color: white;
+}
+
+tbody td {
+  background-color: #F9F9F9;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.table-list-one {
+  display: block;
+  height: 550px;
+  overflow-y: auto;
+}
+
+#datetimepicker{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.error {
+	color: red;
+}
+
+.input-inline-left2px{
+	padding-left: 2px;
+}
+
+.input-inline-right2px{
+	padding-right: 2px;
+}

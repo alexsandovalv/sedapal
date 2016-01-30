@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<!-- Modal -->
+	<div class="modal fade" id="showImgModal" tabindex="-1" role="dialog" th:fragment="modal"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+					</button>
+					<h4 class="modal-title" id="titleModalLabel">
+						<span>Agregar</span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+
+						<img src="" alt="imgen gabo" id="viewImg"
+							class="img-responsive printImg" />
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
