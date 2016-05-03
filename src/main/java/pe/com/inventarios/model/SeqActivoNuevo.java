@@ -1,6 +1,7 @@
 package pe.com.inventarios.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +18,15 @@ public class SeqActivoNuevo  implements Serializable{
 	private Long id;
 	private Long anexo;
 	private Long activo_referencia;
+	private Date fecha_registro;
+	private String usuario_registro;
 	
 	public SeqActivoNuevo() {}
 	
-	public SeqActivoNuevo(Long anexo) {
+	public SeqActivoNuevo(Long anexo, String usuario_registro) {
 		this.anexo = anexo;
+		this.fecha_registro = new Date();
+		this.usuario_registro = usuario_registro;
 	}
 	
 	public Long getId() {
@@ -43,6 +48,22 @@ public class SeqActivoNuevo  implements Serializable{
 
 	public void setActivo_referencia(Long activo_referencia) {
 		this.activo_referencia = activo_referencia;
+	}
+
+	public Date getFecha_registro() {
+		return fecha_registro;
+	}
+
+	public void setFecha_registro(Date fecha_registro) {
+		this.fecha_registro = fecha_registro;
+	}
+
+	public String getUsuario_registro() {
+		return usuario_registro;
+	}
+
+	public void setUsuario_registro(String usuario_registro) {
+		this.usuario_registro = usuario_registro;
 	}
 	
 	

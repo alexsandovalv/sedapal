@@ -25,6 +25,9 @@ public class Foto implements Serializable{
 	@Column(name="activo", nullable=false)
 	private Long activo;
 	
+	private String path;
+	private String secuence;
+	
 	
 //	@ManyToOne(optional=false, fetch = FetchType.LAZY)
 //	@JoinColumn(name="activo", referencedColumnName="activo")
@@ -57,10 +60,25 @@ public class Foto implements Serializable{
 	public void setActivo(Long activo) {
 		this.activo = activo;
 	}
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getSecuence() {
+		return secuence;
+	}
+
+	public void setSecuence(String secuence) {
+		this.secuence = secuence;
+	}
 
 	@Override
 	public String toString() {
-		return "Foto [id=" + id + ", activo=" + activo + "]";
+		return "Foto [id=" + id + ", activo=" + activo + ", path=" + path + ", secuence=" + secuence + "]";
 	}
 
 

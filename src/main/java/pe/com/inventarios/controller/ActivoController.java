@@ -3,6 +3,7 @@ package pe.com.inventarios.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,8 +90,8 @@ public class ActivoController extends BaseController{
             		unActivo = new Activo();
             		unActivo.setActivo_sedapal(Long.valueOf(codigo));
             		mav.addObject("process", "new");
-            		if(anexo.intValue() == 4)
-            			unActivo.setActivo(anexo);
+//            		if(anexo.intValue() == 4)
+//            			unActivo.setActivo(anexo);
             	}else{
             		MessageHelper.addErrorAttribute(ra, "activo.duplicate", unActivo.getClase());
             		mav.setViewName(URL_ACTIVO_PARENT);
@@ -230,31 +231,32 @@ public class ActivoController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/printPDFFolio/{anexo}/{numFolio}", method = RequestMethod.GET)
-	public ModelAndView printPDFFolio(ModelMap parameterMap, HttpServletRequest req, 
-				@PathVariable String anexo, @PathVariable String numFolio) throws IOException {
-		String path = "";
-		String subReport = "";
-		
+	public ModelAndView printPDFFolio(HttpServletRequest req, 
+				@PathVariable String anexo, @PathVariable String numFolio) throws Exception {
+//		String path = "";
+//		String subReport = "";
+//		
 		int tipoAnexo = Integer.parseInt(anexo);
-		path = getFilePath("/static/image/logo-sedapal.png");
+//		path = getFilePath("/static/image/logo-sedapal.png");
+//		
+		Map<String, Object> map = configMapPrinter(tipoAnexo, numFolio);
+		map.put("datasource", dbsoruce);
+//		parameterMap.put("pathLogo", path);
+//		
+//		if(tipoAnexo==3){
+//			parameterMap.put("numeroFolio", numFolio);
+//			subReport = getFilePath("/static/reportes/subreporte/anexo3_subreport_folio.jasper");			
+//		}else if(tipoAnexo==4){
+//			subReport = getFilePath("/static/reportes/subreporte/anexo4_subreport_folio.jasper");
+//			parameterMap.put("numeroFolio", numFolio);
+//		}else{
+//			parameterMap.put("numeroFolio", numFolio);
+//		}
 		
-		parameterMap.put("datasource", dbsoruce);		
-		parameterMap.put("pathLogo", path);
 		
-		if(tipoAnexo==3){
-			parameterMap.put("numeroFolio", numFolio);
-			subReport = getFilePath("/static/reportes/subreporte/anexo3_subreport_folio.jasper");			
-		}else if(tipoAnexo==4){
-			subReport = getFilePath("/static/reportes/subreporte/anexo4_subreport_folio.jasper");
-			parameterMap.put("numeroFolio", numFolio);
-		}else{
-			parameterMap.put("numeroFolio", numFolio);
-		}
+		map.put("format", "pdf");
 		
-		parameterMap.put("format", "pdf");
-//		parameterMap.put("pathSubReport", subReport);
-		
-		ModelAndView modelAndView = new ModelAndView("Anexo"+tipoAnexo+"_folio",parameterMap);
+		ModelAndView modelAndView = new ModelAndView("Anexo"+tipoAnexo+"_folio",map);
 		return modelAndView;
 	}
 	
@@ -262,11 +264,15 @@ public class ActivoController extends BaseController{
 	public String obtenerActivo(@RequestParam(defaultValue="0") String codigo, @RequestParam String anexo, Model model, 
 				HttpSession session, @RequestParam(defaultValue="false") String flagAccept){
     	Activo unActivo=null;
-    	unActivo = activoService.encontrarActivoPorClase(Long.valueOf(codigo), Long.valueOf(anexo));
+//    	unActivo = activoService.encontrarActivoPorClase(Long.valueOf(codigo), Long.valueOf(anexo));
+    	unActivo = activoService.findByActivo(Long.valueOf(codigo));
     	boolean accept = BooleanUtils.toBoolean(flagAccept);
     		
     	if(unActivo == null){
     		throw new ActivoNotFoundException("Activo no encontrado.");
+    	}
+    	if(unActivo.getEstado().equals("2") && !accept){
+    		throw new ActivoConflictException("Activo "+codigo+" ya se encuentra conciliado.");
     	}
     	
     	Activo activoSession = null;
@@ -287,7 +293,8 @@ public class ActivoController extends BaseController{
 	    	    	}
 	        	}
     		}else if(anexo.equalsIgnoreCase("4")){
-    			if(null != unActivo.getNumSup() && (
+    			if(org.apache.commons.lang3.StringUtils.isNotBlank(unActivo.getNumSup()) && 
+    					org.apache.commons.lang3.StringUtils.isNotBlank(activoSession.getNumSup()) && (
     					!activoSession.getNumSup().equalsIgnoreCase(unActivo.getNumSup()) && 
     					!accept &&
     	    			unActivo.getEstado_registro().equalsIgnoreCase("2"))){
@@ -345,6 +352,7 @@ public class ActivoController extends BaseController{
         	unActivo.setFecha_actualiza(new Date());
         	unActivo.setFecha_registro(new Date());
         	unActivo.setNumeroImpresion(null);
+        	unActivo.setNumero_folio(null);
         	if(anexo.equals("4")){
         		unActivo.setNumSup("");
         	}else{
@@ -562,6 +570,7 @@ public class ActivoController extends BaseController{
     				activo.setFecha_actualiza(new Date());
     				activo.setFecha_registro(new Date());
     				activo.setNumeroImpresion(null);
+    				activo.setNumero_folio(null);
     		    	if(anexo.equals("4"))
     		    		activo.setNumSup("");
     		    	else
@@ -584,6 +593,45 @@ public class ActivoController extends BaseController{
     	}
     	return repeat;
     }
+    
+	@RequestMapping(value = "/activoup", method = RequestMethod.GET)
+	public ModelAndView updateactive (){
+		return new ModelAndView("report/updateActive");
+	}
+	
+	@RequestMapping(value = "/activoup/{anexo}/exists", method = RequestMethod.POST)
+	public void validexist (@RequestParam(required=true) String codigo, 
+			@RequestParam(required=true)String anexo){
+		if(!StringUtils.hasText(codigo))
+			return;
+		if(!activoService.validateIfExists(Long.valueOf(codigo), anexo))
+			throw new ActivoConflictException("No existe el activo "+codigo);
+	}
+	
+	@RequestMapping(value = "/activoup/update/newactivo", method = RequestMethod.POST)
+	public String saveNewActive (RedirectAttributes ra, @RequestParam(required=true) String codigo, 
+			@RequestParam(value="cboAnexo", required=true)String anexo,
+			@RequestParam(required=true) String newcodigo){
+		
+		Long activo = 0L, newActivo=0L;
+		if(org.apache.commons.lang3.StringUtils.isNumeric(codigo))
+			activo = Long.valueOf(codigo);
+		if(org.apache.commons.lang3.StringUtils.isNumeric(newcodigo))
+			newActivo = Long.valueOf(newcodigo);
+		
+		try {
+			if(activoService.validateIfExists(newActivo, anexo)){
+				MessageHelper.addWarningAttribute(ra, "activo.duplicate2", newActivo);
+				return "redirect:/activo/activoup";
+			}
+			activoService.updateNewActive(activo, newActivo, anexo);
+			MessageHelper.addInfoAttribute(ra, "update.sussesful", newActivo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return "redirect:/activo/activoup";
+	}
+
     
     private void removeOfSessionActivesRemoves(Activo unActivo, HttpSession session) {
     	List<Activo> removeActivos = (List<Activo>)session.getAttribute("removeActivos");

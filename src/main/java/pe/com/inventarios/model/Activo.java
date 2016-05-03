@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
 @Entity(name="inventario")
@@ -140,6 +139,7 @@ public class Activo implements Serializable{
 		this.emplazamiento = new Emplazamiento();
 		this.ficha = new Ficha();
 		this.fecha_inventario = new Date();
+		this.activo = 0L;
 	}
     
     public Activo(ActivoForm form){

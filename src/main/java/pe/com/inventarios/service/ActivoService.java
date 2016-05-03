@@ -1,11 +1,13 @@
 package pe.com.inventarios.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,6 @@ import pe.com.inventarios.repository.FichaRepository;
 import pe.com.inventarios.repository.FotoRepository;
 import pe.com.inventarios.repository.SeqActivoNuevoRepository;
 import pe.com.inventarios.repository.SeqRegistroRepository;
-
 @Service
 public class ActivoService{
 	
@@ -84,7 +85,8 @@ public class ActivoService{
 	}
 	
 	public List<Activo> buscarActivosXActivoSuperior(Long codigo, Long anexo){
-		List<Activo> activos = activoRepository.findByNumSup(codigo, anexo.intValue());
+		List<Activo> activos = activoRepository.findByNumSup(codigo);
+		findFotosByActivos(activos);
 		return activos;
 	}
 
@@ -135,6 +137,10 @@ public class ActivoService{
 		return (List<Emplazamiento>) emplazamientoRepository.findAll();
 	}
 	
+	public CentroCosto getCentroCostoByCC(Long idCC){
+		return centroCostoRepository.findByCentrocosto(idCC);
+	}
+	
 	public List<CentroCosto> getAllCentroCosto(){
 		List<Object[]> mapCeco = (List<Object[]>) centroCostoRepository.getAllCentroCosto();
 		
@@ -172,13 +178,16 @@ public class ActivoService{
 
     @Transactional
 	public Activo guardar(Activo activo){
+    	
     	if(activo.getActivo() == null || (activo.getActivo() == 0L || activo.getActivo() == 4L)){
-    		SeqActivoNuevo seqActivoNew = new SeqActivoNuevo(activo.getClase());
+    		SeqActivoNuevo seqActivoNew = new SeqActivoNuevo(activo.getClase(), activo.getUsername());
     		if(!StringUtils.isEmpty(activo.getActivo_sedapal()))
     			seqActivoNew.setActivo_referencia(activo.getActivo_sedapal());
     		seqActivoNuevoRepository.save(seqActivoNew);
-    		if( activo.getActivo() == null || activo.getActivo() == 4L){
-    			if(!StringUtils.hasLength(activo.getNumSup()))
+    		if( activo.getActivo() == null || activo.getActivo() == 0L){
+    			activo.setId(null);
+    			if(null == activo.getFichaUsuario() || !StringUtils.hasLength(activo.getFichaUsuario().toString()))
+    			if(!StringUtils.hasLength(activo.getNumSup()) || !!activo.getNumSup().equalsIgnoreCase("0") || activo.getActivo() == 4L)
     				activo.setNumSup(seqActivoNew.getId().toString());
     		}
     		activo.setActivo(seqActivoNew.getId());
@@ -196,5 +205,39 @@ public class ActivoService{
 		activoRepository.save(activo);
 		return activo;
 	}
-
+    
+    public boolean validateIfExists(Long activo, String planilla){
+    	return BooleanUtils.toBoolean(activoRepository.existByActivo(activo, planilla));
+    }
+    
+    public void updateNewActive(Long activo, Long newActivo, String planilla) throws SQLException{ 
+    	
+    	int up = activoRepository.setNewActive(activo, newActivo);
+    	if(planilla.equalsIgnoreCase("4"))
+    		activoRepository.setNumSupActive(activo.toString(), newActivo.toString());
+    }
+    
+    public List<Activo> searchbyPlanillaClaseEntregableRango(int planilla, String clase, String entregable, String startFolio, String endFolio){
+    	return activoRepository.findAllPlanillaClaseEntregableRangFolio(planilla, clase, entregable, startFolio, endFolio);
+    }
+    
+    public List<Activo> searchbyPlanillaClaseEntregable(int planilla, String clase, String entregable){
+    	return activoRepository.findAllPlanillaClaseEntregable(planilla, clase, entregable);
+    }
+    
+    public List<Activo> searchbyPlanillaEntregable(int planilla, String entregable){
+    	return activoRepository.findAllPlanillaEntregable(planilla, entregable);
+    }
+    
+    public List<Activo> searchbyPlanillaClase(int planilla, String clase){
+    	return activoRepository.findAllPlanillaClase(planilla, clase);
+    }
+    
+    public List<Activo> searchbyPlanillaEntregableRango(int planilla, String entregable, String startFolio, String endFolio){
+    	return activoRepository.findAllPlanillaEntregableRango(planilla, entregable, startFolio, endFolio);
+    }
+    
+    public List<Activo> searchbyPlanillaClaseRango(int planilla, String clase, String startFolio, String endFolio){
+    	return activoRepository.findAllPlanillaClaseRango(planilla, clase, startFolio, endFolio);
+    }
 }

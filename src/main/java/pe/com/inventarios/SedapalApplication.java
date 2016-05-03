@@ -6,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 @SpringBootApplication
+//@EnableScheduling
 public class SedapalApplication extends SpringBootServletInitializer{
 	
 	protected SpringApplicationBuilder config(SpringApplicationBuilder builder){
