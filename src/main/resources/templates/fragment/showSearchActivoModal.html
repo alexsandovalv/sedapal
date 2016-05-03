@@ -37,19 +37,30 @@
 	        			
 	        			$("#txtCodigo").val('').focus();
 	        			$("#tmpCodigo").val('');
+
+	        			btnCancela();
 	        			
-	        			$('#txtCodigo').on('keyup keypress', function(e) {
+	        			//$("#cancelbtn").trigger("click");
+	        			
+	        			$(".close").click(function(event) {
+	        				btnCancela();
+	        				//$("#txtCodigo").val('');
+						});	
+	        			
+	        			$('#txtCodigo').on('keypress', function(e) {
 	        				  var code = e.keyCode || e.which;
 	        				  if (code == 13) {
 		        				  e.preventDefault();
 	        					  $("#buscarCode").trigger("click");
+	        				  }
+	        				  else if (code == 27) {
+	        					  btnCancela();
 	        				  }
 	        				});
 	        			
 	        			$("#buscarCode").click(function(e){
 	    					e.preventDefault();
 	    					console.log("click en buscar code..");
-	    					
 	    					var urlMain = /*[[@{/activo/}]]*/
 	    					var url = urlMain + 'obtenerActivo';
 	    					var code = $("#txtCodigo").val();
@@ -112,7 +123,6 @@
 	    								$("#txtCodigo").focus();
 	    						}
 	    					});
-	    					
 	    				});
 	        			
 	        			$(document).on("click", "#addbtn", function(event) {
@@ -137,11 +147,16 @@
 	        				$("#flagAccept").val('true');
 	        				$("#txtCodigo").val($("#tmpCodigo").val());
 	        				$("#buscarCode").trigger("click");
+	        				btnCancela();
 	        			});
 	        			
 	        			$(document).on("click", "#cancelbtn", function(event) {
 	        				event.preventDefault();
-	            			$("#divAlert").remove();
+	        				btnCancela();
+	        			});
+	        			
+	        			function btnCancela(){
+	        				$("#divAlert").remove();
 	            			$("#divbtngroup").remove();
 	            			$("#flagAccept").val('false');
 	            			$("#txtCodigo").removeAttr('readonly');
@@ -150,7 +165,7 @@
 	        				$("#searchCode").removeClass("hidden");
 	            			$("#buscarCode").removeClass("hidden");
 	            			$("#txtCodigo").focus();
-	        			});
+	        			}
 	        			
 	        		});
 	        	</script>

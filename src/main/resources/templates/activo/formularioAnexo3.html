@@ -113,7 +113,7 @@
 												th:field="*{emplazamiento}" required="required" >
 											<option value="" selected="selected">Seleccione</option>
 											<option th:each="empl : ${emplzamientos}" 
-												th:text="${empl.codigo +' - '+ empl.vinculado}" th:value="${{empl.codigo}}"
+												th:text="${empl.codigo +' - ' + empl.vinculado}" th:value="${{empl.codigo}}"
 												>[option]</option>
 										</select>
 										<input type="hidden" id="txtDenoEmplazamientos" th:field="*{empl_denominacion}" /> 
@@ -245,6 +245,15 @@
 				}
 				$("#txtFichaUsuario").focus();
 				// ]]>
+				
+				$('#searchActivoModal').on('shown.bs.modal', function() {
+				    $("#txtCodigo").focus();
+				});
+				$('#searchActivoModal').on('hidden.bs.modal', function(eve) {
+				    $("#txtCodigo").val('');
+				    $("#cancelbtn").trigger("click");
+				    $(this).removeData('bs.modal');
+				});
 				
 				$(document).on("click", ".addActivo", function(event) {
 					event.preventDefault();

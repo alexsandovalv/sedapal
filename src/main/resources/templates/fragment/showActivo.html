@@ -11,12 +11,13 @@
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
 				</button>
-				<h4 class="modal-title" id="titleModalLabel">
+				<h4 class="modal-title" id="">
                     <strong><span th:text="${#strings.isEmpty(process)}?'Crear Activo':'Editar Activo'">Editar Activo</span></strong>
 				</h4>
 			</div>
 		      <div class="modal-body" id="bodyForm">
 		        <div class="container-fluid">
+		        	<a th:href="@{/activo/picture/}" class="hidden" id="hdnShowImgn"></a>
 	        		<form class="form-horizontal" id="saveActivo" method="post" enctype="multipart/form-data" 
 	        				th:action="${#strings.isEmpty(process)}?@{'/activo/save/new/'}:@{'/activo/save/'+${codigoEditable}+'/edit/'}"
 	        				th:object="${activo}">
@@ -149,7 +150,7 @@
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		      </div>
 		    </div>
-		    
+		    <div th:replace="fragment/showImageModal :: modal"></div>
 		    <script th:inline="javascript">
 		    
 		    $(function(){
@@ -242,6 +243,20 @@
 			    				
 			    			});
 			    		
+				    });
+				    
+				    $(".showImg").click(function(event) {
+						$("#viewImg").attr('src', '');
+				    	$("#showImgModal").modal({
+							backdrop: "static",
+							show : true
+						});
+				    	
+				    	var url = $("#hdnShowImgn").attr("href");
+				    		url += this.id;
+						$("#viewImg").attr('src', url);
+						var i = $(this).index();
+						$("#titleModalLabel span").text("Imagen "+ i);
 				    });
 				            
 				// ]]>

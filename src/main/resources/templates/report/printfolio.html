@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	
+	<head th:replace="fragment/header :: head"></head>
+	<body>
+
+		<header th:replace="fragment/header :: headerNavigation(activeLink='printFolio')">&nbsp;</header>
+
+		<div class="container">
+			
+			<div class="header-title">
+				<h1 class="dashboard-title text-center h1">Impresi&oacute;n de Formularios</h1>
+			</div>
+
+			<div class="col-xs-12 col-sm-10 col-md-10 container-fluid">
+				<th:block th:if="${message != null}">
+			        <div th:replace="fragment/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">Flash message</div>
+			    </th:block>
+			
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Criterio de b&uacute;squeda:</h3>
+					</div>
+					<div class="panel-body">
+						<form action="#" id="formSearch" th:action="@{/report/search/folio}" method="post" class="form-horizontal" role="form">
+							<div class="form-group">
+								<div class="radio radio-primary col-xs-12 col-sm-3 col-md-3 text-right">
+									<label for="optionsRadios1">
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="checked" />
+										<strong>Planilla</strong>
+									</label>
+								</div>
+								
+								<div class="col-xs-12 col-sm-7 col-md-7"><br/>
+									<div class="form-inline">
+										<select id="cboAnexo" name="cboAnexo" class="form-control">
+											<option value="2">Planilla de Inventario de Unidades de Transporte</option>
+											<option value="3">Planilla de M&aacute;quinarias, muebles y equipos diversos</option>
+											<option value="4">Planilla de Inventario de Equipamiento de Estructuras Sanitarias</option>
+											<option value="5">Planilla de Inventario de Terrenos, locales Administrativos y Estructuras Sanitarias</option>
+										</select>
+										<select id="cboclases" name="cboClase" class="form-control">
+											<option value="">Seleccione</option>
+										</select>
+										<select id="cboEntregable" name="cboEntregable" class="form-control">
+											<option value=""></option>
+											<option value="PRIMER">Entregable 1</option>
+											<option value="SEGUNDO">Entregable 2</option>
+											<option value="TERCER">Entregable 3</option>
+										</select>
+									</div>
+									<div class="form-inline">
+										<input type="text" id="txtFolio1" name="folio1" class="form-control inputNumber zero6" autocomplete="off"
+												placeholder="000000" maxlength="6"/>
+										&nbsp;&nbsp;a&nbsp;&nbsp;
+										<input type="text" id="txtFolio2" name="folio2" class="form-control inputNumber zero6" autocomplete="off"
+												placeholder="999999" maxlength="6"/>
+										<!-- autocomplete="off" -->
+									</div>
+								</div>
+								
+							</div>
+							<!-- 
+							<div class="form-group">
+								<div class="radio radio-primary col-xs-12 col-sm-3 col-md-3 text-right">
+									<label for="optionsRadios2">
+										<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
+										<strong>Entregable</strong>
+									</label>
+								</div>
+								
+								<div class="col-xs-12 col-sm-7 col-md-7">
+									<select id="cboEntregable" name="cboEntregable" class="form-control" disabled="disabled">
+										<option value="PRIMER">Entregable 1</option>
+										<option value="SEGUNDO">Entregable 2</option>
+										<option value="TERCER">Entregable 3</option>
+									</select>
+								</div>
+							</div>
+							 -->
+							<div class="form-group">
+							    <div class="col-sm-offset-3 col-sm-8 col-xs-12">
+							      <button type="button" id="btnBuscar" class="btn btn-info btn-lg" aria-label="Left Align">
+							      	<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir
+							      </button>
+							    </div>
+							</div>
+							
+						</form>
+					</div>
+				</div>				
+			</div>
+			
+		</div>
+		
+		<script th:inline="javascript">
+			$("#txtFolio1").focus();
+			$("#cboAnexo").trigger("change");
+			$(':text').on('keyup keypress', function(e) {
+				  var code = e.keyCode || e.which;
+				  if (code == 13) {
+					  $("#btnBuscar").trigger("click");
+				  }
+				});
+			
+			var validateField = function(isAlert){
+				if($("#optionsRadios1").is(":checked")){
+					if(isAlert){
+						/* if( !$.trim($("#txtFolio1").val()) ){
+							alert('Ingrese Folio 1.');
+							$("#txtFolio1").focus();
+							return false;
+						}if( !$.trim($("#txtFolio2").val()) ){
+							alert('Ingrese Folio 2.');
+							$("#txtFolio2").focus();
+							return false;
+						} */
+						var starFolio = parseInt($("#txtFolio1").val(),10);
+						var endFolio = parseInt($("#txtFolio2").val(),10);
+						if(starFolio >= endFolio){
+							alert('Por favor valide el rango del folio.');
+							$("#txtFolio1").select();
+							$("#txtFolio1").focus();
+							return false;
+						}							
+						$("#formSearch").removeAttr("target");
+						return true;
+					}else{
+						$("#txtFolio1").removeAttr("readonly");
+						$("#txtFolio2").removeAttr("readonly");
+			            $("#cboAnexo").removeAttr("disabled");
+			            $("#cboAnexo").val(2);
+			            $("#cboEntregable").attr("disabled","disabled");
+			            return false;
+		            }
+		        }else if($("#optionsRadios2").is(":checked")){
+		        	if(isAlert){
+						
+						$("#formSearch").removeAttr("target");
+						return true;
+		            }else{
+		            	$("#cboEntregable").removeAttr("disabled");
+		            	$("#cboAnexo").attr("disabled","disabled");
+			            $("#txtFolio1").attr("readonly","readonly").val('');
+			            $("#txtFolio2").attr("readonly","readonly").val('');
+			            return false;
+		        	}
+		        }
+			}
+			$("#optionsRadios1, #optionsRadios2").change(function(){
+				validateField(false);
+			});
+			
+			$("#btnBuscar").click(function(event){
+				event.preventDefault();
+				if(validateField(true)){
+	            	$("#questionPrint").modal({
+						backdrop: "static",
+						show : true
+					});
+				}
+			});		
+			
+			$(function(){
+				// <![CDATA[
+				var url;
+				
+				$("#cboAnexo").change(function(){
+					url = /*[[@{/activo/util/anexos/}]]*/
+					url += $("#cboAnexo").val();
+					
+					$.getJSON(url).done(function(data){
+						$("#cboclases").empty();
+						var option = $('<option />');
+						option.attr('value', '').text('Seleccione');
+						$("#cboclases").append(option);
+				    	$.each(data, function(){
+				    		option = $('<option />');
+				    		option.attr('value', this.clase).text(this.denominacion);
+				    		$("#cboclases").append(option);
+				    	});
+				    });
+					$("#cboclases").val("");
+				})
+				
+				// ]]>
+			});
+			
+			
+		</script>
+		
+		<footer th:replace="fragment/footer :: footer"></footer>
+		<div th:replace="fragment/questionPrint :: questionPrint"></div>
+	</body>
+</html>

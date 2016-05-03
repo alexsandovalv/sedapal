@@ -64,6 +64,8 @@
 	          	<li><a href="#">Inicio</a></li>
 	            <li th:class="${activeLink=='registrar'}?'active':''"><a href="#" th:href="@{/activo/}">Registrar</a></li>
 	            <li th:class="${activeLink=='report'}?'active':''"><a href="#" th:href="@{/report/}">Reportes</a></li>
+	            <li th:class="${activeLink=='updateActive'}?'active':''"><a href="#" th:href="@{/activo/activoup}">Actualiza Activo</a></li>
+	            <li th:class="${activeLink=='printFolio'}?'active':''"><a href="#" th:href="@{/report/search}">Imprimir Folios</a></li>
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
 	            <li>

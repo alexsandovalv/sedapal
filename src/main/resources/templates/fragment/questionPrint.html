@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- Modal -->
+		<div class="modal fade" id="questionPrint" tabindex="-1" role="dialog" aria-hidden="true" th:fragment="questionPrint">
+		  <div class="modal-dialog modal-sm" >
+		    <div class="modal-content">
+		      <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+				</button>
+				<h4 class="modal-title" id="titleModalLabel">
+					Pregunta..<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				</h4>
+			</div>
+		      <div class="modal-body" id="bodySearch">
+		        
+	        	<div class="container-fluid">
+	        		
+	        		<div class="row">
+	        			<h4 class="text-center">
+	        				Desea enviar a imprimir o descargar los archivos en formato zip.
+	        			</h4>
+	        		</div>
+					
+				</div>
+	        	
+	        	<script th:inline="javascript">
+	        		$(function(){
+	        			// <![CDATA[
+	    				$("#btnPrint").click(function(){
+	    					var formUrlLocal = [[@{'/report/search/folio/sendprint'}]];
+	    					var form = $("#formSearch");
+	    					form.attr("action", formUrlLocal);
+	    					form.submit();
+	    				});
+	    				
+	    				$("#btnDownload").click(function(){
+	    					var formUrlLocal = [[@{'/report/search/folio/download'}]];
+	    					var form = $("#formSearch");
+	    					form.attr("action", formUrlLocal);
+	    					form.submit();
+	    				});
+	    				
+	    				// ]]>
+	    			});
+	        			
+	        	</script>
+		        
+		      </div>
+		      <div class="modal-footer" id="footerbtn">
+		        <button type="button" id="btnPrint" class="btn btn-info btn-lg" aria-label="Left Align">
+			    	<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir
+			    </button>
+			    <button type="button" id="btnDownload" class="btn btn-warning btn-lg" aria-label="Left Align">
+			    	<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar
+			    </button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+</body>
+</html>

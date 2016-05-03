@@ -120,7 +120,7 @@
 										
 										<select class="form-control cmbEmplazamiento" id="txtEmplazamiento" 
 												th:field="*{emplaz}" required="required" >
-											<option value="0" selected="selected">Seleccione</option>
+											<option value="" selected="selected">Seleccione</option>
 											<option th:each="empl : ${emplzamientos}" 
 												th:text="${empl.codigo +' - '+ empl.vinculado}" th:value="${{empl.codigo}}"
 												>[option]</option>

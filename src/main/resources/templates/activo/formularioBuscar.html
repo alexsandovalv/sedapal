@@ -56,7 +56,7 @@
 								</div>
 								
 								<div class="col-xs-12 col-sm-7 col-md-7">
-									<input type="text" id="txtResponsable" name="responsable" class="form-control inputNumber nocopy" 
+									<input type="text" id="txtResponsable" name="responsable" class="form-control inputNumber" 
 											placeholder="Ingrese Responsable" readonly="readonly" autocomplete="off" />
 								</div>
 																
@@ -71,8 +71,8 @@
 								</div>
 								
 								<div class="col-xs-12 col-sm-7 col-md-7">
-									<input type="text" id="txtNumFolio" name="folio" class="form-control inputNumber nocopy" 
-											placeholder="Numero Folio" readonly="readonly" autocomplete="off" />
+									<input type="text" id="txtNumFolio" name="folio" class="form-control inputNumber zero6" 
+											placeholder="Numero Folio" readonly="readonly" autocomplete="off" maxlength="6"/>
 								</div>
 								
 							</div>
@@ -94,7 +94,7 @@
 			$("#txtCodigo").removeAttr("readonly");
 			$("#txtCodigo").focus();
 			
-			$(':text').on('keyup keypress', function(e) {
+			$(':text').on('keypress', function(e) {
 				  var code = e.keyCode || e.which;
 				  if (code == 13) {
 					  $("#btnBuscar").trigger("click");
