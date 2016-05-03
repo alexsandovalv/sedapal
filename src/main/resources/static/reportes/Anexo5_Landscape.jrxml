@@ -115,7 +115,7 @@ where
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLANILLA DE INVENTARIO DE TERRENOS, LOCALES ADMINISTRATIVOS Y ESTRUCTURAS SANITARIAS]]></text>
 			</staticText>
@@ -130,7 +130,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Código : GFFO005]]></text>
 			</staticText>
@@ -143,7 +143,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Revisión : 00 ]]></text>
 			</staticText>
@@ -156,7 +156,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Aprobado : J-ERCP]]></text>
 			</staticText>
@@ -169,7 +169,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Fecha : 2013.09.19]]></text>
 			</staticText>
@@ -186,7 +186,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="false"/>
+					<font fontName="SansSerif" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página : "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
@@ -199,7 +199,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="false"/>
+					<font fontName="SansSerif" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -219,7 +219,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nro. :]]></text>
 			</staticText>
@@ -247,7 +247,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NUMERO_IMPRESION}]]></textFieldExpression>
 			</textField>
@@ -267,7 +267,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ESTADO POSESION:]]></text>
 			</staticText>
@@ -280,7 +280,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Z:]]></text>
 			</staticText>
@@ -295,7 +295,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DENOMINACION_CECO}]]></textFieldExpression>
 			</textField>
@@ -308,7 +308,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODIGO_INTERNO}]]></textFieldExpression>
 			</textField>
@@ -323,7 +323,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DENOM_ESTRUCTUTRA}]]></textFieldExpression>
 			</textField>
@@ -338,7 +338,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OPERATIVIDAD}]]></textFieldExpression>
 			</textField>
@@ -353,7 +353,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ A.T. y A.C.: (M2)]]></text>
 			</staticText>
@@ -366,7 +366,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ COORDENADAS     U.T.M.:]]></text>
 			</staticText>
@@ -379,7 +379,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ MAT. CONSTRUCCION:]]></text>
 			</staticText>
@@ -392,7 +392,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Y:]]></text>
 			</staticText>
@@ -408,7 +408,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ EMPLAZAMIENTO:]]></text>
 			</staticText>
@@ -423,7 +423,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CENTRO_COSTO}]]></textFieldExpression>
 			</textField>
@@ -438,7 +438,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO_CONSERVACION}]]></textFieldExpression>
 			</textField>
@@ -453,7 +453,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MAT_COSTRUCCION}]]></textFieldExpression>
 			</textField>
@@ -468,7 +468,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{XX}]]></textFieldExpression>
 			</textField>
@@ -483,7 +483,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{AT_AC_M2}]]></textFieldExpression>
 			</textField>
@@ -498,7 +498,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ACTIVO_FIJO}]]></textFieldExpression>
 			</textField>
@@ -513,7 +513,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DENOM. ESTRUCT:]]></text>
 			</staticText>
@@ -528,7 +528,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DIRECCION 1:(1)]]></text>
 			</staticText>
@@ -541,7 +541,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DIRECCION 2:(1)]]></text>
 			</staticText>
@@ -554,7 +554,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ HABILITACION: (2)]]></text>
 			</staticText>
@@ -569,7 +569,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DISTRITO:]]></text>
 			</staticText>
@@ -582,7 +582,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ UBIGEO:]]></text>
 			</staticText>
@@ -595,7 +595,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ACTIVO FIJO:]]></text>
 			</staticText>
@@ -610,7 +610,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CODIGO INTERNO N°:]]></text>
 			</staticText>
@@ -623,7 +623,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CENTRO COSTO:]]></text>
 			</staticText>
@@ -636,7 +636,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DENOMINACION Ce. Co.:]]></text>
 			</staticText>
@@ -649,7 +649,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{HABILITACION}]]></textFieldExpression>
 			</textField>
@@ -662,7 +662,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DISTRITO}]]></textFieldExpression>
 			</textField>
@@ -675,7 +675,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIRECCION_2}]]></textFieldExpression>
 			</textField>
@@ -690,7 +690,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIRECCION_1}]]></textFieldExpression>
 			</textField>
@@ -703,7 +703,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{UBIGEO}]]></textFieldExpression>
 			</textField>
@@ -716,7 +716,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EMPLAZAMIENTO}]]></textFieldExpression>
 			</textField>
@@ -731,7 +731,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO_POSECION}]]></textFieldExpression>
 			</textField>
@@ -744,7 +744,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVENTARIO Y EVALUACION]]></text>
 			</staticText>
@@ -757,7 +757,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[X:]]></text>
 			</staticText>
@@ -770,7 +770,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ESTADO CONSERVACION:]]></text>
 			</staticText>
@@ -785,7 +785,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{YY}]]></textFieldExpression>
 			</textField>
@@ -800,7 +800,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ZZ}]]></textFieldExpression>
 			</textField>
@@ -813,7 +813,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ OPERATIVIDAD:]]></text>
 			</staticText>
@@ -828,7 +828,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
@@ -843,7 +843,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FECHA_INVENTARIO}]]></textFieldExpression>
 			</textField>
@@ -883,7 +883,7 @@ where
 			<staticText>
 				<reportElement x="22" y="57" width="148" height="26" backcolor="#050505" uuid="80ba4acc-998b-4534-a94f-8234bbaeb631"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE USUARIO DE ACTIVO FIJO]]></text>
 			</staticText>
@@ -903,7 +903,7 @@ where
 			<staticText>
 				<reportElement x="221" y="56" width="148" height="26" backcolor="#050505" uuid="d5dcbf61-bf6e-4ed6-9930-19e9f409ec14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES Y APELLIDOS DE JEFE DE EQUIPO]]></text>
 			</staticText>
@@ -923,7 +923,7 @@ where
 			<staticText>
 				<reportElement x="420" y="56" width="148" height="26" backcolor="#050505" uuid="b8201a22-4209-4a82-a14d-22e5e76fed20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE INVENTARIADOR]]></text>
 			</staticText>
@@ -943,7 +943,7 @@ where
 			<staticText>
 				<reportElement x="619" y="56" width="148" height="26" backcolor="#050505" uuid="9a429945-e280-40d3-9fe9-8358d073c1a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE JEFE DE INVENTARIO]]></text>
 			</staticText>
@@ -961,7 +961,7 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="SansSerif" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMPLAZAMIENTO:]]></text>
 			</staticText>
@@ -970,7 +970,7 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6"/>
+					<font fontName="SansSerif" size="6"/>
 				</textElement>
 				<text><![CDATA[ANEXO N° 07]]></text>
 			</staticText>
@@ -979,14 +979,14 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="SansSerif" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CENTRO DE COSTO:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="699" y="37" width="40" height="16" uuid="9976b9a2-8943-46ff-8437-0796996b5636"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6"/>
+					<font fontName="SansSerif" size="6"/>
 				</textElement>
 				<text><![CDATA[ANEXO N° 08]]></text>
 			</staticText>

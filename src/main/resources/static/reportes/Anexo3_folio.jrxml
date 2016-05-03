@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2016-01-24T23:21:57 -->
+<!-- 2016-04-18T19:45:59 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Anexo3_folio" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="87c189a9-fadd-4dc4-8bb0-93b7d8c5c9ce">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sedapalCRD"/>
 	<parameter name="numeroFolio" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[12437]]></defaultValueExpression>
@@ -13,10 +14,11 @@
 	</parameter>
 	<parameter name="pathSubReport3" class="net.sf.jasperreports.engine.JasperReport">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["Anexo3_subreport_folio.jasper"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["anexo3_subreport_folio.jasper"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select if (iv.NUMERO_IMPRESION is null,"", iv.NUMERO_IMPRESION) as NUMERO_IMPRESION, iv.CECO, iv.CENTRO_COSTO_DENOMI, 
+		<![CDATA[select if (iv.NUMERO_IMPRESION is null,"", iv.NUMERO_IMPRESION) as NUMERO_IMPRESION, iv.CECO, 
+   (select cc.denominacion from centro_costo cc where cc.centrocosto = iv.CECO) as CENTRO_COSTO_DENOMI, 
 	iv.EQUIPO_PROYECTO, iv.GERENCIA,
     DATE_FORMAT(iv.FECHA_INVENTARIO, '%d/%m/%Y') as FECHA_INVENTARIO,
     (select concat(nombres, ' ', ape_paterno, ' ', ape_materno) from ficha where idficha = iv.FICHA_USUARIO) nombres,
@@ -25,6 +27,7 @@
 	where e.codigo = iv.emplaz) as DEN_EMPLAZ
 from inventario iv
 where iv.numero_folio =   $P{numeroFolio} and 
+  iv.estado_registro = '2' and
   exists  
     (  select 'X' 
     	 from clase c 

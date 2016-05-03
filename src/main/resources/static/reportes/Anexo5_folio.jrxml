@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2016-01-24T23:41:08 -->
+<!-- 2016-04-06T15:37:30 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Anexo5_folio" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="87c189a9-fadd-4dc4-8bb0-93b7d8c5c9ce">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="numeroFolio" class="java.lang.String"/>
@@ -17,8 +17,7 @@
    b.habilitacion                      as HABILITACION,
    b.equip_ubigeo                  as UBIGEO,
    b.distrito                            as DISTRITO,
-   (select concat(e.codigo, ' - ', e.cs_vinculado) from emplazamiento e
-	where e.codigo = b.emplaz) as EMPLAZAMIENTO,
+   b.emplaz 	 						as EMPLAZAMIENTO,
    b.umb                                as AT_AC_M2,
    b.xx                                   as XX,
    b.yy                                   as YY,
@@ -39,7 +38,8 @@ FROM
   inventario b
 where 
   b.numero_folio =  $P{numeroFolio} 
-  and exists (select 'X' from clase c where c.anexo = 5 and b.clase = c.clase)]]>
+  and exists (select 'X' from clase c where c.anexo = 5 and b.clase = c.clase)
+  and b.estado_registro = '2']]>
 	</queryString>
 	<field name="ACTIVO_FIJO" class="java.lang.Long"/>
 	<field name="CODIGO_INTERNO" class="java.lang.String"/>
@@ -117,7 +117,7 @@ where
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="SansSerif" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLANILLA DE INVENTARIO DE TERRENOS, LOCALES ADMINISTRATIVOS Y ESTRUCTURAS SANITARIAS]]></text>
 			</staticText>
@@ -132,7 +132,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Código : GFFO005]]></text>
 			</staticText>
@@ -145,7 +145,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Revisión : 00 ]]></text>
 			</staticText>
@@ -158,7 +158,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Aprobado : J-ERCP]]></text>
 			</staticText>
@@ -171,7 +171,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[Fecha : 2013.09.19]]></text>
 			</staticText>
@@ -188,7 +188,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="false"/>
+					<font fontName="SansSerif" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página : "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
@@ -201,7 +201,7 @@ where
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="false"/>
+					<font fontName="SansSerif" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -221,12 +221,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nro. :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="240" y="4" width="260" height="18" uuid="d75aef8b-9b0a-4a2b-b41f-c34f8d17d4e4"/>
+				<reportElement x="240" y="4" width="279" height="18" uuid="d75aef8b-9b0a-4a2b-b41f-c34f8d17d4e4"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Al  ……..  de  ……………………………………...del   2015]]></text>
 			</staticText>
@@ -259,7 +259,7 @@ where
 	<columnHeader>
 		<band height="202" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="147" width="100" height="17" backcolor="#C9C9C5" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
+				<reportElement mode="Opaque" x="1" y="143" width="100" height="17" backcolor="#C9C9C5" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -270,25 +270,25 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ESTADO POSESION:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="587" y="75" width="32" height="17" backcolor="#C9C9C5" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
+				<reportElement mode="Opaque" x="587" y="74" width="32" height="17" backcolor="#C9C9C5" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Z:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="621" y="146" width="180" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb">
+				<reportElement mode="Opaque" x="621" y="142" width="180" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -298,13 +298,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DENOMINACION_CECO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="349" y="23" width="134" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
+				<reportElement mode="Opaque" x="347" y="24" width="136" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -312,7 +312,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODIGO_INTERNO}]]></textFieldExpression>
@@ -328,13 +328,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DENOM_ESTRUCTUTRA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="350" y="147" width="133" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b">
+				<reportElement mode="Opaque" x="350" y="143" width="133" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -344,7 +344,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OPERATIVIDAD}]]></textFieldExpression>
@@ -354,57 +354,57 @@ where
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ A.T. y A.C.: (M2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="498" y="41" width="89" height="51" backcolor="#C9C9C5" uuid="0a40d031-e7ad-46c4-91aa-484d2062d247"/>
+				<reportElement mode="Opaque" x="498" y="40" width="89" height="51" backcolor="#C9C9C5" uuid="0a40d031-e7ad-46c4-91aa-484d2062d247"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ COORDENADAS     U.T.M.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="498" y="110" width="121" height="17" backcolor="#C9C9C5" uuid="1630c366-09ac-4612-a6c7-806cf57d817f"/>
+				<reportElement mode="Opaque" x="498" y="108" width="121" height="17" backcolor="#C9C9C5" uuid="1630c366-09ac-4612-a6c7-806cf57d817f"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ MAT. CONSTRUCCION:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="587" y="57" width="32" height="17" backcolor="#C9C9C5" uuid="4467b401-e03e-4562-9bbc-eeb78dbad0bb"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Y:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="129" width="100" height="17" backcolor="#C9C9C5" uuid="bc1ca2e5-55dd-4558-ba25-5d89dca79047">
+				<reportElement mode="Opaque" x="1" y="126" width="100" height="17" backcolor="#C9C9C5" uuid="bc1ca2e5-55dd-4558-ba25-5d89dca79047">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -415,12 +415,12 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ EMPLAZAMIENTO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="621" y="128" width="180" height="17" uuid="c0bc2312-7d81-4d17-b547-afc1cd2120a4">
+				<reportElement mode="Opaque" x="621" y="125" width="180" height="17" uuid="c0bc2312-7d81-4d17-b547-afc1cd2120a4">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -430,13 +430,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CENTRO_COSTO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="621" y="92" width="180" height="17" uuid="b0835939-782d-4ae6-a4a7-99454433b594">
+				<reportElement mode="Opaque" x="621" y="91" width="180" height="17" uuid="b0835939-782d-4ae6-a4a7-99454433b594">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -446,13 +446,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO_CONSERVACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="621" y="110" width="180" height="17" uuid="2b056bb2-1cec-4835-b8fe-c50ff5ff143f">
+				<reportElement mode="Opaque" x="621" y="108" width="180" height="17" uuid="2b056bb2-1cec-4835-b8fe-c50ff5ff143f">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -462,7 +462,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MAT_COSTRUCCION}]]></textFieldExpression>
@@ -478,7 +478,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{XX}]]></textFieldExpression>
@@ -494,13 +494,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{AT_AC_M2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="103" y="23" width="141" height="17" uuid="5fcdc8d2-4c89-454d-936d-7838598c326c">
+				<reportElement x="103" y="24" width="142" height="17" uuid="5fcdc8d2-4c89-454d-936d-7838598c326c">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box padding="0">
@@ -510,7 +510,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ACTIVO_FIJO}]]></textFieldExpression>
 			</textField>
@@ -525,7 +525,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DENOM. ESTRUCT:]]></text>
 			</staticText>
@@ -540,7 +540,7 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DIRECCION 1:(1)]]></text>
 			</staticText>
@@ -553,12 +553,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DIRECCION 2:(1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="93" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="76f96efc-5b81-4add-b14d-317d1e5db11a"/>
+				<reportElement mode="Opaque" x="1" y="92" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="76f96efc-5b81-4add-b14d-317d1e5db11a"/>
 				<box padding="0">
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -566,12 +566,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ HABILITACION: (2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="245" y="111" width="102" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="acce8ea3-8cbd-4997-9739-1ce37d270c4b">
+				<reportElement mode="Opaque" x="245" y="109" width="102" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="acce8ea3-8cbd-4997-9739-1ce37d270c4b">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box padding="0">
@@ -581,12 +581,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ DISTRITO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="111" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="9440405a-d2dd-4f6c-b6f0-2544bde52137"/>
+				<reportElement mode="Opaque" x="1" y="109" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="9440405a-d2dd-4f6c-b6f0-2544bde52137"/>
 				<box padding="0">
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -594,12 +594,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ UBIGEO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="23" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="d35a5350-8de4-464c-ab74-ea4638605314"/>
+				<reportElement mode="Opaque" x="1" y="24" width="100" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="d35a5350-8de4-464c-ab74-ea4638605314"/>
 				<box padding="0">
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -607,12 +607,12 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ACTIVO FIJO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="245" y="23" width="102" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="93394ce3-1cdc-4cca-9395-9f28ad4097b5">
+				<reportElement mode="Opaque" x="245" y="24" width="102" height="17" forecolor="#030303" backcolor="#C9C9C5" uuid="93394ce3-1cdc-4cca-9395-9f28ad4097b5">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box padding="0">
@@ -622,38 +622,38 @@ where
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CODIGO INTERNO N°:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="498" y="128" width="121" height="17" backcolor="#C9C9C5" uuid="865581d4-9e6d-47cf-b9fc-ab52488c76f6"/>
+				<reportElement mode="Opaque" x="498" y="125" width="121" height="17" backcolor="#C9C9C5" uuid="865581d4-9e6d-47cf-b9fc-ab52488c76f6"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CENTRO COSTO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="498" y="146" width="121" height="17" backcolor="#C9C9C5" uuid="2556f0c7-a8f7-4b1e-b775-14f01c935c15"/>
+				<reportElement mode="Opaque" x="498" y="142" width="121" height="17" backcolor="#C9C9C5" uuid="2556f0c7-a8f7-4b1e-b775-14f01c935c15"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DENOMINACION Ce. Co.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="103" y="93" width="380" height="17" uuid="aa514018-2b44-44d5-b3b0-e5c0442e504f"/>
+				<reportElement mode="Opaque" x="103" y="92" width="380" height="17" uuid="aa514018-2b44-44d5-b3b0-e5c0442e504f"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -661,13 +661,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{HABILITACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="349" y="111" width="134" height="17" uuid="dd8c964c-0a0c-49c9-be86-59bf94c9163d"/>
+				<reportElement mode="Opaque" x="349" y="109" width="134" height="17" uuid="dd8c964c-0a0c-49c9-be86-59bf94c9163d"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -675,7 +675,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DISTRITO}]]></textFieldExpression>
@@ -689,7 +689,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIRECCION_2}]]></textFieldExpression>
@@ -705,13 +705,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIRECCION_1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="103" y="111" width="141" height="17" uuid="7f6d6de1-fe1c-4784-9388-8a172eb930fe"/>
+				<reportElement mode="Opaque" x="103" y="109" width="141" height="17" uuid="7f6d6de1-fe1c-4784-9388-8a172eb930fe"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -719,13 +719,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{UBIGEO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="103" y="129" width="380" height="17" uuid="10f0e79d-6b4d-4a3e-bf97-c17348f6cc8d"/>
+				<reportElement mode="Opaque" x="103" y="126" width="380" height="17" uuid="10f0e79d-6b4d-4a3e-bf97-c17348f6cc8d"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -733,13 +733,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EMPLAZAMIENTO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="103" y="147" width="141" height="17" uuid="5c71bad3-a69e-47e8-af2f-12ecdce2329c">
+				<reportElement mode="Opaque" x="103" y="143" width="141" height="17" uuid="5c71bad3-a69e-47e8-af2f-12ecdce2329c">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
@@ -749,7 +749,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO_POSECION}]]></textFieldExpression>
@@ -763,33 +763,33 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVENTARIO Y EVALUACION]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="587" y="40" width="32" height="17" backcolor="#C9C9C5" uuid="7d33a63d-fc65-487b-b995-c2d501639299"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[X:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="498" y="93" width="121" height="17" backcolor="#C9C9C5" uuid="83317423-56d8-4204-b903-6e08b23500c9"/>
+				<reportElement mode="Opaque" x="498" y="91" width="121" height="17" backcolor="#C9C9C5" uuid="83317423-56d8-4204-b903-6e08b23500c9"/>
 				<box>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ESTADO CONSERVACION:]]></text>
 			</staticText>
@@ -804,7 +804,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{YY}]]></textFieldExpression>
@@ -820,13 +820,13 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ZZ}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="245" y="147" width="102" height="17" backcolor="#C9C9C5" uuid="9017a8c3-e60b-4c64-935f-c96d25ff1246"/>
+				<reportElement mode="Opaque" x="245" y="143" width="102" height="17" backcolor="#C9C9C5" uuid="9017a8c3-e60b-4c64-935f-c96d25ff1246"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -834,7 +834,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ OPERATIVIDAD:]]></text>
 			</staticText>
@@ -849,7 +849,7 @@ where
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
@@ -892,7 +892,7 @@ where
 	</detail>
 	<pageFooter>
 		<band height="125" splitType="Stretch">
-			<rectangle radius="2">
+			<rectangle radius="0">
 				<reportElement x="0" y="54" width="202" height="71" uuid="512b7c8c-b352-4407-a4a3-28b6decc3169"/>
 			</rectangle>
 			<staticText>
@@ -908,11 +908,11 @@ where
 			<staticText>
 				<reportElement x="22" y="57" width="148" height="26" backcolor="#050505" uuid="80ba4acc-998b-4534-a94f-8234bbaeb631"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE USUARIO DE ACTIVO FIJO]]></text>
 			</staticText>
-			<rectangle radius="2">
+			<rectangle radius="0">
 				<reportElement x="202" y="54" width="199" height="71" uuid="c3df6f8f-103c-4c89-8f75-a3fab4519eeb"/>
 			</rectangle>
 			<staticText>
@@ -928,11 +928,11 @@ where
 			<staticText>
 				<reportElement x="221" y="56" width="148" height="26" backcolor="#050505" uuid="d5dcbf61-bf6e-4ed6-9930-19e9f409ec14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES Y APELLIDOS DE JEFE DE EQUIPO]]></text>
 			</staticText>
-			<rectangle radius="2">
+			<rectangle radius="0">
 				<reportElement x="401" y="54" width="199" height="71" uuid="274b6eb0-f6ae-4c0a-b022-5b92849e43a8"/>
 			</rectangle>
 			<staticText>
@@ -940,7 +940,7 @@ where
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Ficha]]></text>
+				<text><![CDATA[N° DNI]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="401" y="54" width="199" height="30" backcolor="#F5F5F5" uuid="3470703a-8343-4096-a25b-5ef783891f4a"/>
@@ -948,11 +948,11 @@ where
 			<staticText>
 				<reportElement x="420" y="56" width="148" height="26" backcolor="#050505" uuid="b8201a22-4209-4a82-a14d-22e5e76fed20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE INVENTARIADOR]]></text>
 			</staticText>
-			<rectangle radius="2">
+			<rectangle radius="0">
 				<reportElement x="600" y="54" width="201" height="71" uuid="8af1a2c0-c598-4423-8925-d035cd8f1198"/>
 			</rectangle>
 			<staticText>
@@ -960,7 +960,7 @@ where
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Ficha]]></text>
+				<text><![CDATA[N° DNI]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="600" y="54" width="201" height="30" backcolor="#F5F5F5" uuid="be5e574c-5e9e-4aa6-a962-4c926b7669ef"/>
@@ -968,7 +968,7 @@ where
 			<staticText>
 				<reportElement x="619" y="56" width="148" height="26" backcolor="#050505" uuid="9a429945-e280-40d3-9fe9-8358d073c1a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES, APELLIDOS Y FIRMA DE JEFE DE INVENTARIO]]></text>
 			</staticText>
@@ -986,7 +986,7 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="SansSerif" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMPLAZAMIENTO:]]></text>
 			</staticText>
@@ -995,7 +995,7 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6"/>
+					<font fontName="SansSerif" size="6"/>
 				</textElement>
 				<text><![CDATA[ANEXO N° 07]]></text>
 			</staticText>
@@ -1004,14 +1004,14 @@ where
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6" isBold="true"/>
+					<font fontName="SansSerif" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CENTRO DE COSTO:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="699" y="37" width="40" height="16" uuid="9976b9a2-8943-46ff-8437-0796996b5636"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="6"/>
+					<font fontName="SansSerif" size="6"/>
 				</textElement>
 				<text><![CDATA[ANEXO N° 08]]></text>
 			</staticText>
@@ -1031,7 +1031,7 @@ where
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[Operatividad: (20=OPEARTTIVO, 21=INOPERATIVO, 22=INOPERATIVO-ABANDONADO, 23=INOPERATIVO-RESERVA, 24=INOPERATIVO-ESTUDIO)]]></text>
+				<text><![CDATA[Operatividad: (20=OPERATIVO, 21=INOPERATIVO, 22=INOPERATIVO-ABANDONADO, 23=INOPERATIVO-RESERVA, 24=INOPERATIVO-ESTUDIO)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="27" width="800" height="16" uuid="6c2b9fd3-acaf-4e9f-b7e3-6279f5531bb0">

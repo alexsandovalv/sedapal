@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2016-01-24T23:21:57 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Anexo4_folio" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="87c189a9-fadd-4dc4-8bb0-93b7d8c5c9ce">
+<!-- 2016-04-18T19:41:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Anexo4_folio" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="87c189a9-fadd-4dc4-8bb0-93b7d8c5c9ce">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sedapal"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
 	<parameter name="numeroFolio" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[12437]]></defaultValueExpression>
@@ -11,7 +11,9 @@
 	<parameter name="pathLogo" class="java.lang.String">
 		<defaultValueExpression><![CDATA["D:\\Personal\\Inventario\\imagen\\logo-sedapal.png"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="pathSubReport4" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="pathSubReport4" class="net.sf.jasperreports.engine.JasperReport">
+		<defaultValueExpression><![CDATA["D:\\workspaces\\wkSpring\\wkInventarios\\sedapal\\src\\main\\resources\\static\\reportes\\subreporte\\anexo4_subreport_folio.jrxml"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select 
   if (iv.NUMERO_IMPRESION is null,"", iv.NUMERO_IMPRESION) as NUMERO_IMPRESION, 
@@ -20,8 +22,7 @@
   iv.DIRECCION,
   iv.DISTRITO,
   iv.EMPLAZ,
-    (select concat(e.codigo, ' - ', e.cs_vinculado) from emplazamiento e
-	where e.codigo = iv.emplaz) as DEN_EMPLAZ,
+  iv.emplaz  as DEN_EMPLAZ,
   iv.NUM_SUP,
   iv.EQUIP_UBIGEO,
   iv.EQUIPO_PROYECTO,
@@ -36,10 +37,11 @@ from
   inventario iv
 where 
    iv.numero_folio =  $P{numeroFolio} and 
+   iv.estado_registro = '2' and 
   exists  
     (  select 'X' 
     	 from clase c 
-      where c.anexo = 4 
+      where c.anexo = 5 
           and iv.clase = c.clase
     )
 group by 
@@ -136,7 +138,7 @@ limit 1]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="13" isBold="true"/>
+					<font fontName="SansSerif" size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMULARIO]]></text>
 			</staticText>
@@ -149,7 +151,7 @@ limit 1]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial" size="13" isBold="true"/>
+					<font fontName="SansSerif" size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLANILLA DE INVENTARIO DE EQUIPAMIENTO DE ESTRUCTURAS SANITARIAS]]></text>
 			</staticText>
@@ -213,13 +215,6 @@ limit 1]]>
 				</textElement>
 				<text><![CDATA[: J-ERCP]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="721" y="35" width="45" height="11" uuid="90f77889-9f47-48bf-b483-df4dd47f7a59"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
-				</textElement>
-				<text><![CDATA[: 2013.09.19]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="721" y="46" width="31" height="11" uuid="d2bb5326-4a46-4ab8-bd3e-f3784ca44d87"/>
 				<textElement verticalAlignment="Middle">
@@ -234,12 +229,19 @@ limit 1]]>
 				</textElement>
 				<text><![CDATA[Página]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="721" y="35" width="50" height="11" uuid="32340034-8b75-4873-9abc-7f887e20bade"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[: 2013.09.19]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="126">
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="57" width="130" height="17" backcolor="#DBD9D9" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
+				<reportElement mode="Opaque" x="2" y="57" width="108" height="17" backcolor="#DBD9D9" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -255,7 +257,7 @@ limit 1]]>
 				<text><![CDATA[ TIPO ESTRUCTURA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="74" width="130" height="17" backcolor="#DBD9D9" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
+				<reportElement mode="Opaque" x="2" y="74" width="108" height="17" backcolor="#DBD9D9" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -269,7 +271,7 @@ limit 1]]>
 				<text><![CDATA[ DIRECCION: (2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="91" width="130" height="17" backcolor="#DBD9D9" uuid="7bc40b98-b1b4-4ff4-9a71-a7bb92b2d4a0"/>
+				<reportElement mode="Opaque" x="2" y="91" width="108" height="17" backcolor="#DBD9D9" uuid="7bc40b98-b1b4-4ff4-9a71-a7bb92b2d4a0"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -283,7 +285,7 @@ limit 1]]>
 				<text><![CDATA[ DISTRITO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="108" width="130" height="17" backcolor="#DBD9D9" uuid="2fb5b54b-ecda-4de3-a73e-737548615709"/>
+				<reportElement mode="Opaque" x="2" y="108" width="108" height="17" backcolor="#DBD9D9" uuid="2fb5b54b-ecda-4de3-a73e-737548615709"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -297,7 +299,7 @@ limit 1]]>
 				<text><![CDATA[ EMPLAZAMIENTO: (3)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="74" width="289" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb"/>
+				<reportElement x="110" y="74" width="311" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -311,7 +313,7 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="91" width="289" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
+				<reportElement x="110" y="91" width="311" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -325,7 +327,7 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{DISTRITO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="108" width="289" height="17" uuid="be0b0bce-d36c-4271-b68d-9d9158692a5e"/>
+				<reportElement x="110" y="108" width="311" height="17" uuid="be0b0bce-d36c-4271-b68d-9d9158692a5e"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -336,10 +338,10 @@ limit 1]]>
 					<font size="9"/>
 					<paragraph firstLineIndent="1" leftIndent="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DEN_EMPLAZ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{EMPLAZ}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="57" width="105" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b"/>
+				<reportElement x="110" y="57" width="127" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -347,7 +349,7 @@ limit 1]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="SansSerif" size="7"/>
 					<paragraph firstLineIndent="1" leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EQUIP_TIPO_ESTRUCTURA}]]></textFieldExpression>
@@ -534,7 +536,7 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{numero_folio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="40" width="130" height="17" backcolor="#DBD9D9" uuid="2142005a-79c8-44ae-a334-18e8ff00c1e3"/>
+				<reportElement mode="Opaque" x="2" y="40" width="108" height="17" backcolor="#DBD9D9" uuid="2142005a-79c8-44ae-a334-18e8ff00c1e3"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -576,7 +578,7 @@ limit 1]]>
 				<text><![CDATA[ UBIGEO: (1)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="40" width="105" height="17" uuid="a0e9b15f-b5c0-4dbd-bed1-1c342e39ea15"/>
+				<reportElement x="110" y="40" width="127" height="17" uuid="a0e9b15f-b5c0-4dbd-bed1-1c342e39ea15"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -720,7 +722,7 @@ limit 1]]>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Ficha]]></text>
+				<text><![CDATA[N° DNI]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="399" y="28" width="199" height="30" backcolor="#F5F5F5" uuid="3470703a-8343-4096-a25b-5ef783891f4a"/>
@@ -740,7 +742,7 @@ limit 1]]>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[N° Ficha]]></text>
+				<text><![CDATA[N° DNI]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="598" y="28" width="199" height="30" backcolor="#F5F5F5" uuid="be5e574c-5e9e-4aa6-a962-4c926b7669ef"/>

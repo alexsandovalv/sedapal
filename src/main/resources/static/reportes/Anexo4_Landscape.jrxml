@@ -10,7 +10,7 @@
 	<parameter name="pathLogo" class="java.lang.String">
 		<defaultValueExpression><![CDATA["D:\\Personal\\Inventario\\imagen\\logo-sedapal.png"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="pathSubReport" class="java.lang.String">
+	<parameter name="pathSubReport4" class="java.lang.String">
 		<defaultValueExpression><![CDATA["D:\\workspaces\\wkJasperReport\\MyReports\\anexo4_subreport_A4_Landscape.jasper"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -21,7 +21,8 @@
   iv.DIRECCION,
   iv.DISTRITO,
   iv.EMPLAZ,
-  iv.DEN_EMPLAZ,
+    (select concat(e.codigo, ' - ', e.cs_vinculado) from emplazamiento e
+	where e.codigo = iv.emplaz) as DEN_EMPLAZ,
   iv.NUM_SUP,
   iv.EQUIP_UBIGEO,
   iv.EQUIPO_PROYECTO,
@@ -235,7 +236,7 @@ limit 1]]>
 	<columnHeader>
 		<band height="126">
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="57" width="130" height="17" backcolor="#DBD9D9" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
+				<reportElement mode="Opaque" x="2" y="57" width="108" height="17" backcolor="#DBD9D9" uuid="9cbfaf1a-1675-454c-b665-0a82984af445">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -251,7 +252,7 @@ limit 1]]>
 				<text><![CDATA[ TIPO ESTRUCTURA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="74" width="130" height="17" backcolor="#DBD9D9" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
+				<reportElement mode="Opaque" x="2" y="74" width="108" height="17" backcolor="#DBD9D9" uuid="28762025-e069-429b-ab83-d59699f6ab24"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -265,7 +266,7 @@ limit 1]]>
 				<text><![CDATA[ DIRECCION: (2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="91" width="130" height="17" backcolor="#DBD9D9" uuid="7bc40b98-b1b4-4ff4-9a71-a7bb92b2d4a0"/>
+				<reportElement mode="Opaque" x="2" y="91" width="108" height="17" backcolor="#DBD9D9" uuid="7bc40b98-b1b4-4ff4-9a71-a7bb92b2d4a0"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -279,7 +280,7 @@ limit 1]]>
 				<text><![CDATA[ DISTRITO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="108" width="130" height="17" backcolor="#DBD9D9" uuid="2fb5b54b-ecda-4de3-a73e-737548615709"/>
+				<reportElement mode="Opaque" x="2" y="108" width="108" height="17" backcolor="#DBD9D9" uuid="2fb5b54b-ecda-4de3-a73e-737548615709"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -293,7 +294,10 @@ limit 1]]>
 				<text><![CDATA[ EMPLAZAMIENTO: (3)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="74" width="289" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb"/>
+				<reportElement x="110" y="74" width="311" height="17" uuid="9ae4cfb9-de61-4b95-9d58-abb1782865bb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -307,7 +311,7 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="91" width="289" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
+				<reportElement x="110" y="91" width="311" height="17" uuid="861fd89a-3a23-4f7c-bb6a-99325190cd48"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -321,7 +325,7 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{DISTRITO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="108" width="289" height="17" uuid="be0b0bce-d36c-4271-b68d-9d9158692a5e"/>
+				<reportElement x="110" y="108" width="311" height="17" uuid="be0b0bce-d36c-4271-b68d-9d9158692a5e"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -332,10 +336,10 @@ limit 1]]>
 					<font size="9"/>
 					<paragraph firstLineIndent="2" leftIndent="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{EMPLAZ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DEN_EMPLAZ}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="57" width="105" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b"/>
+				<reportElement x="110" y="57" width="127" height="17" uuid="d76c3bca-f072-41a1-8592-dc2f9867a52b"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -343,7 +347,7 @@ limit 1]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="9"/>
+					<font fontName="SansSerif" size="7"/>
 					<paragraph firstLineIndent="2" leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EQUIP_TIPO_ESTRUCTURA}]]></textFieldExpression>
@@ -530,7 +534,9 @@ limit 1]]>
 				<textFieldExpression><![CDATA[$F{NUMERO_IMPRESION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="2" y="40" width="130" height="17" backcolor="#DBD9D9" uuid="2142005a-79c8-44ae-a334-18e8ff00c1e3"/>
+				<reportElement mode="Opaque" x="2" y="40" width="108" height="17" backcolor="#DBD9D9" uuid="2142005a-79c8-44ae-a334-18e8ff00c1e3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -572,7 +578,10 @@ limit 1]]>
 				<text><![CDATA[ UBIGEO: (1)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="132" y="40" width="105" height="17" uuid="a0e9b15f-b5c0-4dbd-bed1-1c342e39ea15"/>
+				<reportElement x="110" y="40" width="127" height="17" uuid="a0e9b15f-b5c0-4dbd-bed1-1c342e39ea15">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -665,7 +674,7 @@ limit 1]]>
 					<subreportParameterExpression><![CDATA[$P{pathLogo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{pathSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{pathSubReport4}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
