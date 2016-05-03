@@ -62,9 +62,9 @@ $(function() {
 		});
 	// ]]>
 	
-	$('.nocopy').bind("cut copy paste",function(e) {
-	        e.preventDefault();
-	  });
+//	$('.nocopy').bind("cut copy paste",function(e) {
+//	        e.preventDefault();
+//	  });
 	
 	$('#datetimepicker').datetimepicker({
         locale: 'es',
@@ -164,9 +164,10 @@ $(function() {
 		
 		$(".emplazamientoDeno").val('');
 		var txtCmb = $('option:selected', $(this)).text();
-		var arr = txtCmb.split('-');
-		$(".emplazamientoDeno").val($.trim(arr[1]));
-		$("#txtDenoEmplazamientos").val($.trim(arr[1]));
+		var raya = txtCmb.split('-');
+		var divi = raya.split('/');
+		$(".emplazamientoDeno").val($.trim(divi[1]));
+		$("#txtDenoEmplazamientos").val($.trim(divi[1]));
 	});
 	
 	$(".cmbCecos").change(function(e){
@@ -177,6 +178,16 @@ $(function() {
 		var arr = txtCmb.split('-');
 		$(".centroCostoDeno").val($.trim(arr[1]));
 		$("#txtDenominacionCeco").val($.trim(arr[1]));
+		
+//		var urlAction = $("#hdnBuscarCeco").attr("href");
+//			urlAction += $(this).val();
+//		$.getJSON(urlAction)
+//			.done(function(data){
+//				$(".centroCostoDeno").val(data.denominacion);
+////				$(".centroCosto").val(data.centrocosto);
+//	            $(".gerencia").val(data.gerencia);
+//	            $(".proyecto").val(data.unidad_organica);
+//			})
 	});
 	
 	$(".cmbclase").change(function(e){
@@ -184,6 +195,12 @@ $(function() {
 		var txtCmb = $('option:selected', $(this)).text();
 		console.log('text==>' + txtCmb)
 		$("#denominacionClase").val(txtCmb);
+	});
+	
+	$(".zero6").change(function(){
+		var field = $(this);
+		var start = field.val().length;
+		field.val(leftPadTextof6(start, field.val()));
 	});
 	
 });
@@ -217,3 +234,19 @@ function validMasterCheckbox(){
 	if(cntActivoCheck == 0)
 		$(".removeActivosbtn").addClass("hidden");
 }
+
+function leftPadTextof6(ini, text){
+	var start = 6-ini;
+	return loopleftPadText('0', start)+text;
+}
+
+// <![CDATA[
+function loopleftPadText(text, countEnd){
+	var strConcate = '';
+	var i = 0;
+	while( (i++) < countEnd ){
+		strConcate += text;
+	}
+	return strConcate;
+}
+// ]]>
